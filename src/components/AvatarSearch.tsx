@@ -1,9 +1,9 @@
 "use client";
 
 import React from "react";
-import { useState, useEffect } from "react";
 import { useAnilistAvatar } from "@/hooks/useAnilist";
 import Image from "next/image";
+import style from "./AvatarSearch.module.scss";
 
 type AvatarSearchProps = {
   username: string;
@@ -14,25 +14,14 @@ const AvatarSearch: React.FC<AvatarSearchProps> = ({
   username,
   setUsername,
 }) => {
-  const [debouncedName, setDebouncedName] = useState(username);
-  const { error, data } = useAnilistAvatar(debouncedName);
+  const { error, data } = useAnilistAvatar(username);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(e.target.value);
   };
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedName(username);
-    }, 500);
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [username]);
-
   return (
-    <div>
+    <div className={style.container}>
       {data && (
         <Image
           width={100}

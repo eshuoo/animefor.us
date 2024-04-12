@@ -2,7 +2,7 @@
 
 import { useQuery, gql } from "@apollo/client";
 import { AnilistAvatar } from "@/lib/query.interfaces";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 const GET_ANILIST_AVATAR = gql`
   query ($name: String) {
@@ -16,15 +16,21 @@ const GET_ANILIST_AVATAR = gql`
 
 // Define your custom hook
 export const useAnilistAvatar = (name: string) => {
-  const [variables, setVariables] = useState({ name: "" });
-  console.log("useAnilistAvatar called");
-  const { loading, error, data } = useQuery<AnilistAvatar>(GET_ANILIST_AVATAR, {
-    variables,
-  });
+  const [deboundedName, setDeboundedName] = useState(name);
 
   useEffect(() => {
-    setVariables({ name });
+    const timeoutId = setTimeout(() => {
+      setDeboundedName(name);
+    }, 500);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
   }, [name]);
+
+  const { loading, error, data } = useQuery<AnilistAvatar>(GET_ANILIST_AVATAR, {
+    variables: { name: deboundedName },
+  });
 
   return { loading, error, data };
 };
