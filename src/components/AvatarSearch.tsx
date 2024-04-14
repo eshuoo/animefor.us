@@ -1,40 +1,35 @@
 "use client";
 
 import React from "react";
-import { useAnilistAvatar } from "@/hooks/useAnilist";
-import Image from "next/image";
 import style from "./AvatarSearch.module.scss";
+import { useSearchParams, useRouter } from "next/navigation";
+import AnilistAvatar from "./AnilistAvatar";
 
 type AvatarSearchProps = {
-  username: string;
-  setUsername: (username: string) => void;
+  user: string;
 };
 
-const AvatarSearch: React.FC<AvatarSearchProps> = ({
-  username,
-  setUsername,
-}) => {
-  const { error, data } = useAnilistAvatar(username);
+//TODO: fix error rendering
+
+const AvatarSearch: React.FC<AvatarSearchProps> = ({ user }) => {
+  const searchParams = useSearchParams();
+  const username = searchParams.get(user);
+  const { replace } = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUsername(e.target.value);
+    const params = new URLSearchParams(searchParams);
+    params.set(user, e.target.value);
+    replace(`/?${params}`);
   };
 
   return (
     <div className={style.container}>
-      {data && (
-        <Image
-          width={100}
-          height={100}
-          src={data?.User.avatar.medium}
-          alt="avatar"
-        />
-      )}
+      {!username ? <p>dawaj usera</p> : <AnilistAvatar username={username} />}
       <input
         placeholder="Enter your Anilist username"
         type="text"
-        value={username}
         onChange={handleChange}
+        defaultValue={username || ""}
       />
     </div>
   );
