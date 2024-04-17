@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import { useAnilistAvatar } from "@/hooks/useAnilist";
 import Image from "next/image";

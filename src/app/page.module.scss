@@ -1,24 +1,9 @@
-.abs {
-  position: absolute;
-  width: 100%;
-}
-.buttons__box {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 20px;
-}
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  gap: 20px;
-}
 .dobrypodzial {
   text-align: center;
   color: goldenrod;
   margin-top: 10px;
+  position: absolute;
+  width: 100%;
 }
 .glow {
   position: absolute;

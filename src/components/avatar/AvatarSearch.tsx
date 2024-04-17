@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import style from "./AvatarSearch.module.scss";
 import { useSearchParams, useRouter } from "next/navigation";
@@ -8,8 +6,6 @@ import AnilistAvatar from "./AnilistAvatar";
 type AvatarSearchProps = {
   user: string;
 };
-
-//TODO: fix error rendering
 
 const AvatarSearch: React.FC<AvatarSearchProps> = ({ user }) => {
   const searchParams = useSearchParams();
