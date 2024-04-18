@@ -1,10 +1,11 @@
-import React from "react";
+import React, { Suspense } from "react";
 import style from "./page.module.scss";
 import AnilistUsers from "@/components/avatar/AnilistUsers";
 
 //TODO: fix manual URL searchparams parsing
 //TODO: add suspense to useSearchParams components
 //TODO: check if it's possible to simplify AnilistSearch component
+//TODO: change dobrypodzial styling to ::before content: inherit
 
 const App = () => {
   return (
@@ -23,7 +24,9 @@ const App = () => {
           zadanie
         </p>
       </div>
-      <AnilistUsers />
+      <Suspense fallback={<p>Loading...</p>}>
+        <AnilistUsers />
+      </Suspense>
     </>
   );
 };
