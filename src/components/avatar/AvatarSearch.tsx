@@ -1,31 +1,28 @@
 import React from "react";
 import style from "./AvatarSearch.module.scss";
-import { useSearchParams, useRouter } from "next/navigation";
 import AnilistAvatar from "./AnilistAvatar";
 
 type AvatarSearchProps = {
-  user: string;
+  username: string;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-const AvatarSearch: React.FC<AvatarSearchProps> = ({ user }) => {
-  const searchParams = useSearchParams();
-  const username = searchParams.get(user);
-  const { replace } = useRouter();
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const params = new URLSearchParams(searchParams);
-    params.set(user, e.target.value);
-    replace(`/?${params}`);
-  };
-
+const AvatarSearch: React.FC<AvatarSearchProps> = ({
+  username,
+  handleChange,
+}) => {
   return (
     <div className={style.container}>
-      {!username ? <p>dawaj usera</p> : <AnilistAvatar username={username} />}
+      {username ? (
+        <AnilistAvatar username={username} />
+      ) : (
+        <p>Please enter a username</p>
+      )}
       <input
         placeholder="Enter your Anilist username"
         type="text"
         onChange={handleChange}
-        defaultValue={username || ""}
+        defaultValue={username}
       />
     </div>
   );
