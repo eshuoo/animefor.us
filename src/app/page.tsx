@@ -23,7 +23,9 @@ const App = () => {
           zadanie
         </p>
       </div>
-      <AnilistUsers />
+      <Suspense fallback={<p>Loading...</p>}>
+        <AnilistUsers />
+      </Suspense>
     </>
   );
 };
