@@ -23,9 +23,7 @@ const App = () => {
           zadanie
         </p>
       </div>
-      <Suspense>
-        <AnilistUsers />
-      </Suspense>
+      <AnilistUsers />
     </>
   );
 };
