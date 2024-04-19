@@ -3,7 +3,6 @@ import style from "./page.module.scss";
 import AnilistUsers from "@/components/avatar/AnilistUsers";
 
 //TODO: add proper sceleton to useSearchParams components
-//TODO: change dobrypodzial styling to ::before content: inherit
 //TODO: add memoization to AvatarSearch and AnilistUsers components
 
 const App = () => {

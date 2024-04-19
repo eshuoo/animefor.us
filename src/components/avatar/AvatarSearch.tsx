@@ -12,14 +12,15 @@ const AvatarSearch: React.FC<AvatarSearchProps> = ({
   handleChange,
 }) => {
   return (
-    <div className={style.container}>
+    <div className={`${style.container}`}>
       {username ? (
         <AnilistAvatar username={username} />
       ) : (
         <p>Please enter a username</p>
       )}
       <input
-        placeholder="Enter your Anilist username"
+        className="form-control"
+        placeholder="Enter Anilist username"
         type="text"
         onChange={handleChange}
         defaultValue={username}

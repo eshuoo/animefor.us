@@ -4,29 +4,29 @@ import React, { useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import style from "./AnilistUsers.module.scss";
 import AvatarSearch from "@/components/avatar/AvatarSearch";
+import cs from "classnames";
 
 const AnilistUsers = () => {
   const [userCount, setUserCount] = useState(2);
   const searchParams = useSearchParams();
+  const params = new URLSearchParams(searchParams);
   const { replace } = useRouter();
 
   useEffect(() => {
-    if (searchParams.size > 4) {
+    if (params.size > 4) {
       replace(`/`);
-    } else if (searchParams.size > 2) {
-      setUserCount(searchParams.size);
+    } else if (params.size > 2) {
+      setUserCount(params.size);
     }
-  }, [searchParams.size, replace]);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleChange =
     (user: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      const params = new URLSearchParams(searchParams);
       params.set(user, e.target.value);
       replace(`/?${params}`);
     };
 
   const handleRemoveUser = (user: string) => {
-    const params = new URLSearchParams(searchParams);
     setUserCount(userCount - 1);
     params.delete(user);
     replace(`/?${params}`);
@@ -34,23 +34,43 @@ const AnilistUsers = () => {
 
   return (
     <div className={style.container}>
-      {Array.from({ length: userCount }).map((_, index) => (
-        <AvatarSearch
-          key={index}
-          username={searchParams.get(String(index + 1)) || ""}
-          handleChange={handleChange(String(index + 1))}
-        />
-      ))}
-      <div className={style.buttons__box}>
-        {userCount <= 3 && (
-          <button onClick={() => setUserCount(userCount + 1)}>Add User</button>
-        )}
-        {userCount > 2 && (
-          <button onClick={() => handleRemoveUser(String(userCount))}>
-            Remove User
-          </button>
-        )}
+      <div className={style.users_container}>
+        {Array.from({ length: userCount }).map((_, index) => (
+          <AvatarSearch
+            key={index}
+            username={params.get(String(index + 1)) || ""}
+            handleChange={handleChange(String(index + 1))}
+          />
+        ))}
+        <div className={cs(style.buttons_container)}>
+          {userCount > 2 && (
+            <button
+              className="btn btn-danger"
+              onClick={() => handleRemoveUser(String(userCount))}
+            >
+              <b>-</b>
+            </button>
+          )}
+          {userCount <= 3 && (
+            <button
+              className="btn btn-success"
+              onClick={() => setUserCount(userCount + 1)}
+            >
+              <b>+</b>
+            </button>
+          )}
+        </div>
       </div>
+      <button
+        className={cs("btn", "btn-light", {
+          disabled:
+            params.size < 2 ||
+            userCount !== params.size ||
+            !Array.from(params.values()).every((p) => !!p),
+        })}
+      >
+        Submit
+      </button>
     </div>
   );
 };
