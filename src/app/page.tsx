@@ -1,6 +1,7 @@
 import React, { Suspense } from "react";
 import style from "./page.module.scss";
 import AnilistUsers from "@/components/avatar/AnilistUsers";
+import { UsersSkeleton } from "@/components/ui/skeletons";
 
 //TODO: add proper sceleton to useSearchParams components
 //TODO: add memoization to AvatarSearch and AnilistUsers components
@@ -22,7 +23,7 @@ const App = () => {
           zadanie
         </p>
       </div>
-      <Suspense fallback={<p>Loading...</p>}>
+      <Suspense fallback={<UsersSkeleton />}>
         <AnilistUsers />
       </Suspense>
     </>
