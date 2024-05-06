@@ -3,8 +3,10 @@ import style from "./page.module.scss";
 import AnilistUsers from "@/components/avatar/AnilistUsers";
 import { UsersSkeleton } from "@/components/ui/skeletons";
 
-//TODO: add proper sceleton to useSearchParams components
 //TODO: add memoization to AvatarSearch and AnilistUsers components
+//TODO: replace error message
+//TODO: add responsiveness to AnilistUsers component
+//TODO: add anime fetching
 
 const App = () => {
   return (
@@ -23,9 +25,11 @@ const App = () => {
           zadanie
         </p>
       </div>
-      <Suspense fallback={<UsersSkeleton />}>
-        <AnilistUsers />
-      </Suspense>
+      <div className={style.app_container}>
+        <Suspense fallback={<UsersSkeleton />}>
+          <AnilistUsers />
+        </Suspense>
+      </div>
     </>
   );
 };

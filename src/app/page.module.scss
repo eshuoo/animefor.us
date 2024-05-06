@@ -12,6 +12,13 @@
     0 0 60px #e6a900;
   animation: opacity 1s ease-in-out infinite alternate;
 }
+.app_container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 @keyframes opacity {
   0% {
     opacity: 0;

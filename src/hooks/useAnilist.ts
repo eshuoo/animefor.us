@@ -14,6 +14,24 @@ const GET_ANILIST_AVATAR = gql`
   }
 `;
 
+const GET_ANILIST_ANIME = gql`
+  query ($name: String) {
+    MediaListCollection(userName: $name, type: ANIME, status: PLANNING) {
+      lists {
+        entries {
+          media {
+            title {
+              romaji
+              english
+            }
+            siteUrl
+          }
+        }
+      }
+    }
+  }
+`;
+
 // Define your custom hook
 export const useAnilistAvatar = (name: string) => {
   const [deboundedName, setDeboundedName] = useState("");
@@ -35,3 +53,5 @@ export const useAnilistAvatar = (name: string) => {
 
   return { loading, error, data };
 };
+
+export const useAnilistAnime = (name: string) => {};

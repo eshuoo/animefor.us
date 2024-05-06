@@ -6,13 +6,8 @@ import style from "./AnilistUsers.module.scss";
 import AvatarSearch from "@/components/avatar/AvatarSearch";
 import cs from "classnames";
 
-const AnilistUsers = async () => {
+const AnilistUsers = () => {
   const [userCount, setUserCount] = useState(2);
-
-  const [isLoading, setIsLoading] = useState(true);
-  const timer = setTimeout(() => {
-    setIsLoading(false);
-  }, 300);
 
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams);
@@ -75,7 +70,7 @@ const AnilistUsers = async () => {
             !Array.from(params.values()).every((p) => !!p),
         })}
       >
-        Submit
+        Get recommendations
       </button>
     </div>
   );

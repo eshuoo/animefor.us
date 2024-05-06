@@ -1,9 +1,19 @@
-.user_container {
-}
-.user_avatar {
-}
-.user_input {
+.loader {
+  animation-duration: 2.2s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-name: shimmer;
+  background: linear-gradient(to right, #ffffff 8%, #c6c7ca 18%, #ffffff 33%);
+  background-size: 800px 100%;
 }
 
-.users_container {
+@keyframes shimmer {
+  0% {
+    background-position: -800px 0;
+  }
+
+  100% {
+    background-position: 800px 0;
+  }
 }
