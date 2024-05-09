@@ -4,9 +4,10 @@ import AnilistUsers from "@/components/avatar/AnilistUsers";
 import { UsersSkeleton } from "@/components/ui/skeletons";
 
 //TODO: add memoization to AvatarSearch and AnilistUsers components
-//TODO: replace error message
+//TODO: replace error message, add better styling
 //TODO: add responsiveness to AnilistUsers component
 //TODO: add anime fetching
+//TODO: make this absolute positioning app_container bullshit shenanigans work
 
 const App = () => {
   return (

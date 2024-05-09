@@ -5,3 +5,19 @@ export interface AnilistAvatar {
     };
   };
 }
+
+export interface AnilistAnimeList {
+  MediaListCollection: {
+    lists: Array<{
+      entries: Array<{
+        media: {
+          title: {
+            romaji: string;
+            english: string;
+          };
+          siteUrl: string;
+        };
+      }>;
+    }>;
+  };
+}
