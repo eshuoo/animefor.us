@@ -1,6 +1,7 @@
 import React from "react";
 import style from "./AnimeList.module.scss";
 import { useAnilistAnime } from "@/hooks/useAnilist";
+import { getCommonPlanning } from "@/lib/utility";
 
 type AnimeListProps = {
   usernames: string[];
@@ -8,17 +9,11 @@ type AnimeListProps = {
 
 const AnimeList: React.FC<AnimeListProps> = ({ usernames }) => {
   const { data, loading, error } = useAnilistAnime(usernames);
-  console.log("data", data);
-  console.log("loading", loading);
-  console.log("error", error);
-
-  return (
-    <div className={style.container}>
-      {usernames.map((username, index) => (
-        <div key={index}>{username}</div>
-      ))}
-    </div>
-  );
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error</div>;
+  if (data) {
+    const commonPlanning = getCommonPlanning(data);
+  }
 };
 
 export default AnimeList;

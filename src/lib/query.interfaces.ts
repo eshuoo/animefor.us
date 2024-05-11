@@ -1,3 +1,4 @@
+//AnilistAvatar
 export interface AnilistAvatar {
   User: {
     avatar: {
@@ -6,18 +7,37 @@ export interface AnilistAvatar {
   };
 }
 
-export interface AnilistAnimeList {
-  MediaListCollection: {
-    lists: Array<{
-      entries: Array<{
-        media: {
-          title: {
-            romaji: string;
-            english: string;
-          };
-          siteUrl: string;
-        };
-      }>;
-    }>;
+//AnilistAnimeList
+export interface Media {
+  title: {
+    romaji: string;
+    english: string;
+    native: string;
   };
+  siteUrl: string;
+  coverImage: {
+    large: string;
+  };
+  status:
+    | "FINISHED"
+    | "RELEASING"
+    | "NOT_YET_RELEASED"
+    | "CANCELLED"
+    | "HIATUS";
+}
+
+interface MediaEntry {
+  media: Media;
+}
+
+interface MediaList {
+  entries: MediaEntry[];
+}
+
+interface UserMediaListCollection {
+  lists: MediaList[];
+}
+
+export interface AnilistAnimeList {
+  [key: string]: UserMediaListCollection;
 }

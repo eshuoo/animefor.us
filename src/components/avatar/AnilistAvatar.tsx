@@ -21,15 +21,14 @@ const AnilistAvatar: React.FC<AnilistAvatarProps> = ({ username }) => {
   if (error) return <div>error</div>;
   if (loading || data === undefined)
     return <SyncLoader color="darkslateblue" cssOverride={override} />;
-  if (data)
-    return (
-      <Image
-        width={100}
-        height={100}
-        src={data.User.avatar.medium}
-        alt="avatar"
-      />
-    );
+  return (
+    <Image
+      width={100}
+      height={100}
+      src={data.User.avatar.medium}
+      alt="avatar"
+    />
+  );
 };
 
 export default AnilistAvatar;

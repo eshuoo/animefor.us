@@ -59,11 +59,13 @@ const createDynamicAnilistAnimeQuery = (usernames: string[]) => {
             title {
               romaji
               english
+              native
             }
             siteUrl
             coverImage {
               large
             }
+            status
           }
         }
       }
