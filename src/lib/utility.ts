@@ -1,20 +1,60 @@
 import { AnilistAnimeList, Media } from "./query.interfaces";
 
-export const getCommonPlanning = (data: AnilistAnimeList) => {
-  const mediaCount = new Map<Media, number>();
+interface CommonMediaCollection {
+  media: Media;
+  users: string[];
+}
 
-  Object.values(data).forEach((userMediaListCollection) => {
-    userMediaListCollection.lists[0].entries.forEach((entry) => {
-      const media = entry.media;
-      if (mediaCount.has(media)) {
-        mediaCount.set(media, mediaCount.get(media) + 1);
+export const getCommonPlanning = (
+  data: AnilistAnimeList
+): CommonMediaCollection[] => {
+  const mediaCount = new Map<string, CommonMediaCollection>();
+
+  // search for common entries
+  Object.entries(data).forEach(([username, mediaCollection]) => {
+    mediaCollection.lists[0].entries.forEach((entry) => {
+      const media = entry.media.siteUrl;
+      const commonMediaEntry = mediaCount.get(media);
+
+      // todo: optmalize without one set
+      if (commonMediaEntry) {
+        mediaCount.set(media, {
+          media: entry.media,
+          users: [...commonMediaEntry.users, username],
+        });
       } else {
-        mediaCount.set(media, 1);
+        mediaCount.set(media, {
+          media: entry.media,
+          users: [username],
+        });
       }
     });
   });
 
-  //   return commonPlanning;
+  // filtering common entries
+  const commonMediaCollection: CommonMediaCollection[] = [];
+  mediaCount.forEach((commonMedia, _) => {
+    if (commonMedia.users.length >= 2) {
+      commonMediaCollection.push(commonMedia);
+    }
+  });
+
+  return commonMediaCollection;
 };
 
-// https://chatgpt.com/c/ca52e5a4-5f7b-4e24-b2cc-81ac7e9015fa
+// export const getCommonAnime2 = (data: AnilistAnimeList) => {
+//   const mediaCount = new Map<string, string[]>();
+
+//   for (const username in data) {
+//     const usersCollection = data[username].lists[0];
+
+//     usersCollection.entries.forEach(({ media }) => {
+//       const commonMediaUsers = mediaCount.get(media.siteUrl);
+
+//       if (!commonMediaUsers) mediaCount.set(media.siteUrl, [username]);
+//       else mediaCount.set(media.siteUrl, [...commonMediaUsers, username]);
+//     });
+//   }
+
+//   return mediaCount;
+// };

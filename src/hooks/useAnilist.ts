@@ -49,10 +49,8 @@ const createDynamicAnilistAnimeQuery = (usernames: string[]) => {
   }
 
   const userQueries = usernames.map(
-    (_, index) => `
-    user${index + 1}: MediaListCollection(userName: $name${
-      index + 1
-    }, type: ANIME, status: PLANNING) {
+    (name) => `
+    ${name}: MediaListCollection(userName: $${name}, type: ANIME, status: PLANNING) {
       lists {
         entries {
           media {
@@ -73,7 +71,7 @@ const createDynamicAnilistAnimeQuery = (usernames: string[]) => {
   );
 
   const variableDefinitions = usernames
-    .map((_, index) => `$name${index + 1}: String`)
+    .map((name) => `$${name}: String`)
     .join(", ");
 
   const fullQuery = gql`
@@ -89,8 +87,8 @@ export const useAnilistAnime = (usernames: string[]) => {
   const GET_ANILIST_ANIME = createDynamicAnilistAnimeQuery(usernames);
 
   const variables: { [key: string]: string } = {};
-  usernames.forEach((username, index) => {
-    variables[`name${index + 1}`] = username;
+  usernames.forEach((username) => {
+    variables[username] = username;
   });
 
   const { loading, error, data } = useQuery<AnilistAnimeList>(
