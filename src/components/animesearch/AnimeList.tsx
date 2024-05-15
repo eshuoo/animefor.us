@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useAnilistAnime } from "@/hooks/useAnilist";
-import { getCommonPlanning } from "@/lib/utility";
+import { getCommonPlanning, CommonMediaCollection } from "@/lib/utility";
 import Image from "next/image";
 
 import styles from "./AnimeList.module.scss";
@@ -10,18 +10,29 @@ type AnimeListProps = {
 };
 
 const AnimeList: React.FC<AnimeListProps> = ({ usernames }) => {
-  const { data, loading, error } = useAnilistAnime(usernames);
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error</div>;
-  if (data === undefined) return null;
+  const { data, error } = useAnilistAnime(usernames);
 
-  const commonPlanning = getCommonPlanning(data).filter((anime) => {
-    return anime.media.status !== "NOT_YET_RELEASED";
-  });
+  const [commonMedia, setCommonMedia] = useState<CommonMediaCollection[]>([]);
+
+  useEffect(() => {
+    if (!data) {
+      if (commonMedia) setCommonMedia([]);
+      return;
+    }
+
+    setCommonMedia(
+      getCommonPlanning(data).filter(
+        ({ media }) => media.status !== "NOT_YET_RELEASED"
+      )
+    );
+  }, [data]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  if (!commonMedia) return <div>Loading...</div>;
+  if (error) return <div>Error</div>;
 
   return (
     <div>
-      {commonPlanning.map(({ media, users }) => (
+      {commonMedia.map(({ media, users }) => (
         <a
           key={media.siteUrl}
           href={media.siteUrl}
@@ -41,7 +52,9 @@ const AnimeList: React.FC<AnimeListProps> = ({ usernames }) => {
                   media.title.romaji ??
                   media.title.native}
               </h4>{" "}
-              <p>Wanted by {users.join(", ")}</p>
+              <p>
+                Wanted by <b>{users.join(", ")}</b>
+              </p>
             </div>
           </div>
         </a>

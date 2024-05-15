@@ -1,6 +1,6 @@
 import { AnilistAnimeList, Media } from "./query.interfaces";
 
-interface CommonMediaCollection {
+export interface CommonMediaCollection {
   media: Media;
   users: string[];
 }

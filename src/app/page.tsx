@@ -5,7 +5,8 @@ import { UsersSkeleton } from "@/components/ui/skeletons";
 
 //TODO: add memoization to AvatarSearch and AnilistUsers components
 //TODO: make this absolute positioning app_container bullshit shenanigans work
-//TOOD: make UsernameSearch component
+//TODO: make UsernameSearch component
+//TODO: searchParams tylko jako mirror a nie state
 
 const App = () => {
   return (

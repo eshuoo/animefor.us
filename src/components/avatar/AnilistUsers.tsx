@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import React, { useState, useEffect, useMemo } from "react";
+import { useSearchParams } from "next/navigation";
 import style from "./AnilistUsers.module.scss";
 import AvatarSearch from "@/components/avatar/AvatarSearch";
 import cs from "classnames";
@@ -12,12 +12,14 @@ const AnilistUsers = () => {
   const [usernames, setUsernames] = useState<string[]>([]);
 
   const searchParams = useSearchParams();
-  const params = new URLSearchParams(searchParams);
-  const { replace } = useRouter();
+  const params = useMemo(
+    () => new URLSearchParams(searchParams),
+    [searchParams]
+  );
 
   useEffect(() => {
     if (params.size > 4) {
-      replace(`/`);
+      window.history.pushState(null, "", `/`);
     } else if (params.size > 2) {
       setUserCount(params.size);
     }
@@ -26,13 +28,13 @@ const AnilistUsers = () => {
   const handleChange =
     (user: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
       params.set(user, e.target.value);
-      replace(`/?${params}`);
+      window.history.replaceState(null, "", `/?${params}`);
     };
 
   const handleRemoveUser = (user: string) => {
     setUserCount(userCount - 1);
     params.delete(user);
-    replace(`/?${params}`);
+    window.history.replaceState(null, "", `/?${params}`);
   };
 
   return (
