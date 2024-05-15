@@ -12,22 +12,24 @@ export const getCommonPlanning = (
 
   // search for common entries
   Object.entries(data).forEach(([username, mediaCollection]) => {
-    mediaCollection.lists[0].entries.forEach((entry) => {
-      const media = entry.media.siteUrl;
-      const commonMediaEntry = mediaCount.get(media);
+    mediaCollection.lists.forEach((list) => {
+      list.entries.forEach((entry) => {
+        const media = entry.media.siteUrl;
+        const commonMediaEntry = mediaCount.get(media);
 
-      // todo: optmalize without one set
-      if (commonMediaEntry) {
-        mediaCount.set(media, {
-          media: entry.media,
-          users: [...commonMediaEntry.users, username],
-        });
-      } else {
-        mediaCount.set(media, {
-          media: entry.media,
-          users: [username],
-        });
-      }
+        // todo: optmalize without one set
+        if (commonMediaEntry) {
+          mediaCount.set(media, {
+            media: entry.media,
+            users: [...commonMediaEntry.users, username],
+          });
+        } else {
+          mediaCount.set(media, {
+            media: entry.media,
+            users: [username],
+          });
+        }
+      });
     });
   });
 
@@ -39,7 +41,7 @@ export const getCommonPlanning = (
     }
   });
 
-  return commonMediaCollection;
+  return commonMediaCollection.sort((a, b) => b.users.length - a.users.length);
 };
 
 // export const getCommonAnime2 = (data: AnilistAnimeList) => {

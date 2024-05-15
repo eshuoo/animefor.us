@@ -1,6 +1,35 @@
 .container {
-  // display: flex;
-  // flex-wrap: wrap;
-  // justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   margin-top: 2rem;
+}
+
+.link {
+  text-decoration: none;
+}
+
+.animeListEntry {
+  display: flex;
+  justify-content: left;
+  gap: 16px;
+  align-items: center;
+
+  margin: 24px 32px;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+
+  background-color: #282828;
+  color: #fff;
+
+  img {
+    border-radius: 8px;
+  }
+
+  h4,
+  h3 {
+    padding: 0 0 4px;
+    margin: 0;
+  }
 }

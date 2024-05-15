@@ -13,9 +13,5 @@ body {
 
 body {
   color: $forground-color;
-  background: linear-gradient(
-    to bottom,
-    $background-color-start,
-    $background-color-end
-  );
+  background: $background-color;
 }

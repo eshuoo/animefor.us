@@ -65,6 +65,8 @@ const AnilistUsers = () => {
             )}
           </div>
         </div>
+        {/* ---> */}
+        {/* <UsersSelect users={} onChange={() => setUsers} /> */}
         <button
           className={cs("btn", "btn-light", {
             disabled:
@@ -76,8 +78,13 @@ const AnilistUsers = () => {
         >
           Get recommendations
         </button>
-        {usernames && <AnimeList usernames={usernames} />}
       </div>
+
+      {usernames && (
+        <div className={style.container}>
+          <AnimeList key={usernames.join(";")} usernames={usernames} />
+        </div>
+      )}
     </>
   );
 };

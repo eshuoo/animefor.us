@@ -4,34 +4,16 @@ import AnilistUsers from "@/components/avatar/AnilistUsers";
 import { UsersSkeleton } from "@/components/ui/skeletons";
 
 //TODO: add memoization to AvatarSearch and AnilistUsers components
-//TODO: replace error message, add better styling
-//TODO: add responsiveness to AnilistUsers component
-//TODO: add anime fetching
 //TODO: make this absolute positioning app_container bullshit shenanigans work
+//TOOD: make UsernameSearch component
 
 const App = () => {
   return (
-    <>
-      <div className={`${style.dobrypodzial}`}>
-        <h1>dobry podział komponentów zrobi ci loda</h1>
-        <p>
-          pamiętaj skuwysynie jeden <s>kod fragmentu</s> komponent ma jedno
-          zadanie
-        </p>
-      </div>
-      <div className={`${style.dobrypodzial} ${style.glow}`}>
-        <h1>dobry podział komponentów zrobi ci loda</h1>
-        <p>
-          pamiętaj skuwysynie jeden <s>kod fragmentu</s> komponent ma jedno
-          zadanie
-        </p>
-      </div>
-      <div className={style.app_container}>
-        <Suspense fallback={<UsersSkeleton />}>
-          <AnilistUsers />
-        </Suspense>
-      </div>
-    </>
+    <div className={style.app_container}>
+      <Suspense fallback={<UsersSkeleton />}>
+        <AnilistUsers />
+      </Suspense>
+    </div>
   );
 };
 

@@ -1,18 +1,3 @@
-.dobrypodzial {
-  text-align: center;
-  color: goldenrod;
-  margin-top: 10px;
-  position: absolute;
-  width: 100%;
-}
-.glow {
-  position: absolute;
-  width: 100%;
-  text-shadow: 0 0 30px #d7e600, 0 0 40px #c4a002, 0 0 50px #bcdd03,
-    0 0 60px #e6a900;
-  animation: opacity 1s ease-in-out infinite alternate;
-}
-
 .app_container {
   min-height: 100vh;
   width: 100vw;
@@ -21,13 +6,4 @@
   justify-content: center;
   align-items: center;
   overflow-y: hidden;
-}
-
-@keyframes opacity {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
 }
