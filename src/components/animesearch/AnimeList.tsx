@@ -10,7 +10,7 @@ type AnimeListProps = {
 };
 
 const AnimeList: React.FC<AnimeListProps> = ({ usernames }) => {
-  const { data, error } = useAnilistAnime(usernames);
+  const { data, loading, error } = useAnilistAnime(usernames);
 
   const [commonMedia, setCommonMedia] = useState<CommonMediaCollection[]>([]);
 
@@ -27,7 +27,7 @@ const AnimeList: React.FC<AnimeListProps> = ({ usernames }) => {
     );
   }, [data]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  if (!commonMedia) return <div>Loading...</div>;
+  if (loading) return <div>Loading...</div>;
   if (error) return <div>Error</div>;
 
   return (
