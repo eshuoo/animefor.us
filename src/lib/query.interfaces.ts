@@ -24,6 +24,7 @@ export interface Media {
     | "NOT_YET_RELEASED"
     | "CANCELLED"
     | "HIATUS";
+  meanScore: number;
 }
 
 interface MediaEntry {

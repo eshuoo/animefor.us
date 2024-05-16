@@ -17,6 +17,11 @@ const AnilistUsers = () => {
     [searchParams]
   );
 
+  const invalidUsernames: boolean =
+    params.size < 2 ||
+    userCount !== params.size ||
+    !Array.from(params.values()).every((p) => !!p);
+
   useEffect(() => {
     if (params.size > 4) {
       window.history.pushState(null, "", `/`);
@@ -70,12 +75,8 @@ const AnilistUsers = () => {
         {/* ---> */}
         {/* <UsersSelect users={} onChange={() => setUsers} /> */}
         <button
-          className={cs("btn", "btn-light", {
-            disabled:
-              params.size < 2 ||
-              userCount !== params.size ||
-              !Array.from(params.values()).every((p) => !!p),
-          })}
+          disabled={invalidUsernames}
+          className={cs("btn", "btn-light")}
           onClick={() => setUsernames(Array.from(params.values()))}
         >
           Get recommendations

@@ -64,6 +64,7 @@ const createDynamicAnilistAnimeQuery = (usernames: string[]) => {
               large
             }
             status
+            meanScore
           }
         }
       }

@@ -41,7 +41,14 @@ export const getCommonPlanning = (
     }
   });
 
-  return commonMediaCollection.sort((a, b) => b.users.length - a.users.length);
+  // sorting by user count and score
+  const sortedCommonMediaCollection = commonMediaCollection.sort((a, b) => {
+    return (
+      b.users.length - a.users.length || b.media.meanScore - a.media.meanScore
+    );
+  });
+
+  return sortedCommonMediaCollection;
 };
 
 // export const getCommonAnime2 = (data: AnilistAnimeList) => {
