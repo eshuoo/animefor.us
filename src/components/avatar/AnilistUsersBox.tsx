@@ -2,12 +2,12 @@
 
 import React, { useState, useEffect, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
-import style from "./AnilistUsers.module.scss";
-import AvatarSearch from "@/components/avatar/AvatarSearch";
+import style from "./AnilistUsersBox.module.scss";
+import AvatarSearch from "@/components/avatar/AnilistUser";
 import cs from "classnames";
 import AnimeList from "../animesearch/AnimeList";
 
-const AnilistUsers = () => {
+const AnilistUsersBox = () => {
   const [userCount, setUserCount] = useState(2);
   const [usernames, setUsernames] = useState<string[]>([]);
 
@@ -84,12 +84,10 @@ const AnilistUsers = () => {
       </div>
 
       {usernames && (
-        <div className={style.container}>
-          <AnimeList key={usernames.join(";")} usernames={usernames} />
-        </div>
+        <AnimeList key={usernames.join(";")} usernames={usernames} />
       )}
     </>
   );
 };
 
-export default AnilistUsers;
+export default AnilistUsersBox;

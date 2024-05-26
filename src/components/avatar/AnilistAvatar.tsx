@@ -1,5 +1,6 @@
 import React, { CSSProperties } from "react";
 import SyncLoader from "react-spinners/SyncLoader";
+import style from "./AnilistAvatar.module.scss";
 import { useAnilistAvatar } from "@/hooks/useAnilist";
 import Image from "next/image";
 
@@ -22,12 +23,13 @@ const AnilistAvatar: React.FC<AnilistAvatarProps> = ({ username }) => {
   if (loading || data === undefined)
     return <SyncLoader color="darkslateblue" cssOverride={override} />;
   return (
-    <Image
-      width={100}
-      height={100}
-      src={data.User.avatar.medium}
-      alt="avatar"
-    />
+    <div className={style.avatarImage}>
+      <Image
+        fill
+        src={data.User.avatar.medium}
+        alt={`${username}'s avatar image.`}
+      />
+    </div>
   );
 };
 

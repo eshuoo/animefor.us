@@ -1,0 +1,10 @@
+.avatarImage {
+  height: 100px;
+  width: 100px;
+  position: relative;
+
+  img {
+    object-fit: contain;
+    object-position: bottom;
+  }
+}

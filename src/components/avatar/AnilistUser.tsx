@@ -1,13 +1,13 @@
 import React from "react";
-import style from "./AvatarSearch.module.scss";
+import style from "./AnilistUser.module.scss";
 import AnilistAvatar from "./AnilistAvatar";
 
-type AvatarSearchProps = {
+type AnilistUserProps = {
   username: string;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-const AvatarSearch: React.FC<AvatarSearchProps> = ({
+const AnilistUser: React.FC<AnilistUserProps> = ({
   username,
   handleChange,
 }) => {
@@ -29,4 +29,4 @@ const AvatarSearch: React.FC<AvatarSearchProps> = ({
   );
 };
 
-export default AvatarSearch;
+export default AnilistUser;

@@ -1,5 +1,5 @@
-import user from "@/components/avatar/AvatarSearch.module.scss";
-import users from "@/components/avatar/AnilistUsers.module.scss";
+import user from "@/components/avatar/AnilistUser.module.scss";
+import users from "@/components/avatar/AnilistUsersBox.module.scss";
 import style from "./skeletons.module.scss";
 import cs from "classnames";
 
