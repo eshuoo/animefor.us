@@ -7,7 +7,7 @@ import { UsersSkeleton } from "@/components/ui/skeletons";
 //TODO: make this absolute positioning app_container bullshit shenanigans work
 //TODO: make UsernameSearch component
 //TODO: searchParams tylko jako mirror a nie state
-//TODO: fix unwanted 100x100 AnilistAvatar rendering
+//TODO: add proper avatar error and anime error handling
 
 const App = () => {
   return (

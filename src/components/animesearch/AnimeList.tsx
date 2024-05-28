@@ -46,6 +46,7 @@ const AnimeList: React.FC<AnimeListProps> = ({ usernames }) => {
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error</div>;
+  if (!commonMedia.length && data) return <div>No common anime found</div>;
 
   return (
     <div>

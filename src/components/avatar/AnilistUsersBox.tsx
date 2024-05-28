@@ -17,7 +17,7 @@ const AnilistUsersBox = () => {
     [searchParams]
   );
 
-  const invalidUsernames: boolean =
+  const isButtonDisabled: boolean =
     params.size < 2 ||
     userCount !== params.size ||
     !Array.from(params.values()).every((p) => !!p);
@@ -75,7 +75,7 @@ const AnilistUsersBox = () => {
         {/* ---> */}
         {/* <UsersSelect users={} onChange={() => setUsers} /> */}
         <button
-          disabled={invalidUsernames}
+          disabled={isButtonDisabled}
           className={cs("btn", "btn-light")}
           onClick={() => setUsernames(Array.from(params.values()))}
         >
