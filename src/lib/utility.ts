@@ -12,25 +12,27 @@ export const getCommonPlanning = (
 
   // search for common entries
   Object.entries(data).forEach(([username, mediaCollection]) => {
-    mediaCollection.lists.forEach((list) => {
-      list.entries.forEach((entry) => {
-        const media = entry.media.siteUrl;
-        const commonMediaEntry = mediaCount.get(media);
+    mediaCollection.lists
+      .filter((list) => list.isCustomList === false)
+      .forEach((list) => {
+        list.entries.forEach((entry) => {
+          const media = entry.media.siteUrl;
+          const commonMediaEntry = mediaCount.get(media);
 
-        // todo: optmalize without one set
-        if (commonMediaEntry) {
-          mediaCount.set(media, {
-            media: entry.media,
-            users: [...commonMediaEntry.users, username],
-          });
-        } else {
-          mediaCount.set(media, {
-            media: entry.media,
-            users: [username],
-          });
-        }
+          // todo: optmalize without one set
+          if (commonMediaEntry) {
+            mediaCount.set(media, {
+              media: entry.media,
+              users: [...commonMediaEntry.users, username],
+            });
+          } else {
+            mediaCount.set(media, {
+              media: entry.media,
+              users: [username],
+            });
+          }
+        });
       });
-    });
   });
 
   // filtering common entries

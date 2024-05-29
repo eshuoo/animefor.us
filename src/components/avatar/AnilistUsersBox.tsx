@@ -11,7 +11,6 @@ const AnilistUsersBox = () => {
   const [userCount, setUserCount] = useState(2);
   const [paramsUsers, setParamsUsers] = useState<string[]>([]);
   const [usernames, setUsernames] = useState<string[]>([]);
-  const [avatarError, setAvatarError] = useState<boolean>(false);
 
   const searchParams = useSearchParams();
   const params = useMemo(
@@ -30,14 +29,9 @@ const AnilistUsersBox = () => {
 
   const isButtonDisabled: boolean =
     paramsUsers.length < 2 ||
-    userCount !== params.size ||
+    userCount !== paramsUsers.length ||
     !paramsUsers.every((p) => !!p) ||
-    usernames == paramsUsers ||
-    avatarError;
-
-  console.log("userCount", userCount);
-  console.log("paramsUsers", paramsUsers);
-  console.log("usernames", usernames);
+    usernames.sort().join(",") === paramsUsers.sort().join(",");
 
   const handleChange =
     (user: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -60,7 +54,6 @@ const AnilistUsersBox = () => {
               key={index}
               username={params.get(String(index + 1)) || ""}
               handleChange={handleChange(String(index + 1))}
-              setAvatarError={setAvatarError}
             />
           ))}
           <div className={cs(style.buttons_container)}>

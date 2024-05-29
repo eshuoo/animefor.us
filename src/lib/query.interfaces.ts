@@ -33,6 +33,7 @@ interface MediaEntry {
 
 interface MediaList {
   entries: MediaEntry[];
+  isCustomList: boolean;
 }
 
 interface UserMediaListCollection {
