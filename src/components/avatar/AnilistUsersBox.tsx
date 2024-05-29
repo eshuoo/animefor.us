@@ -18,12 +18,16 @@ const AnilistUsersBox = () => {
     [searchParams]
   );
 
+  //handle rendering correct amount of users
   useEffect(() => {
     if (params.size > 4) {
       window.history.pushState(null, "", `/`);
     } else if (params.size > 2) {
       setUserCount(params.size);
     }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
     setParamsUsers(Array.from(params.values()));
   }, [params]);
 

@@ -19,8 +19,6 @@ const override: CSSProperties = {
 const AnilistAvatar: React.FC<AnilistAvatarProps> = ({ username }) => {
   const { loading, error, data } = useAnilistAvatar(username || "");
 
-  console.log("data", data);
-
   if (error) {
     return <p className="text-danger">User not found</p>;
   }
