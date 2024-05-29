@@ -1,4 +1,4 @@
-import React, { useState, useEffect, CSSProperties } from "react";
+import React, { useState, useEffect, CSSProperties, memo } from "react";
 import { useAnilistAnime } from "@/hooks/useAnilist";
 import { getCommonPlanning, CommonMediaCollection } from "@/lib/utility";
 import Image from "next/image";
@@ -61,6 +61,7 @@ const AnimeList: React.FC<AnimeListProps> = ({ usernames }) => {
             <div className={styles.coverImage}>
               <Image
                 fill
+                sizes="128px"
                 src={media.coverImage.large}
                 alt={`Cover image for ${
                   media.title.english ??
@@ -95,4 +96,4 @@ const AnimeList: React.FC<AnimeListProps> = ({ usernames }) => {
   );
 };
 
-export default AnimeList;
+export default memo(AnimeList);

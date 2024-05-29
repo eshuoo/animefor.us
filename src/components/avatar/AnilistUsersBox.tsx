@@ -3,13 +3,15 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import style from "./AnilistUsersBox.module.scss";
-import AvatarSearch from "@/components/avatar/AnilistUser";
+import AnilistUser from "@/components/avatar/AnilistUser";
 import cs from "classnames";
 import AnimeList from "../animesearch/AnimeList";
 
 const AnilistUsersBox = () => {
   const [userCount, setUserCount] = useState(2);
+  const [paramsUsers, setParamsUsers] = useState<string[]>([]);
   const [usernames, setUsernames] = useState<string[]>([]);
+  const [avatarError, setAvatarError] = useState<boolean>(false);
 
   const searchParams = useSearchParams();
   const params = useMemo(
@@ -17,18 +19,25 @@ const AnilistUsersBox = () => {
     [searchParams]
   );
 
-  const isButtonDisabled: boolean =
-    params.size < 2 ||
-    userCount !== params.size ||
-    !Array.from(params.values()).every((p) => !!p);
-
   useEffect(() => {
     if (params.size > 4) {
       window.history.pushState(null, "", `/`);
     } else if (params.size > 2) {
       setUserCount(params.size);
     }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    setParamsUsers(Array.from(params.values()));
+  }, [params]);
+
+  const isButtonDisabled: boolean =
+    paramsUsers.length < 2 ||
+    userCount !== params.size ||
+    !paramsUsers.every((p) => !!p) ||
+    usernames == paramsUsers ||
+    avatarError;
+
+  console.log("userCount", userCount);
+  console.log("paramsUsers", paramsUsers);
+  console.log("usernames", usernames);
 
   const handleChange =
     (user: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,10 +56,11 @@ const AnilistUsersBox = () => {
       <div className={style.container}>
         <div className={style.users_container}>
           {Array.from({ length: userCount }).map((_, index) => (
-            <AvatarSearch
+            <AnilistUser
               key={index}
               username={params.get(String(index + 1)) || ""}
               handleChange={handleChange(String(index + 1))}
+              setAvatarError={setAvatarError}
             />
           ))}
           <div className={cs(style.buttons_container)}>
@@ -77,7 +87,7 @@ const AnilistUsersBox = () => {
         <button
           disabled={isButtonDisabled}
           className={cs("btn", "btn-light")}
-          onClick={() => setUsernames(Array.from(params.values()))}
+          onClick={() => setUsernames(paramsUsers)}
         >
           Get recommendations
         </button>
