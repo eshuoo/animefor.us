@@ -2,15 +2,15 @@
 
 import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
-import style from "./AnilistUsersBox.module.scss";
 import AnilistUser from "@/components/avatar/AnilistUser";
-import cs from "classnames";
 import AnimeList from "../animesearch/AnimeList";
+import style from "./AnilistUsersBox.module.scss";
+import cs from "classnames";
 
 const AnilistUsersBox = () => {
   const [userCount, setUserCount] = useState(2);
   const [paramsUsers, setParamsUsers] = useState<string[]>([]);
-  const [usernames, setUsernames] = useState<string[]>([]);
+  const [submittedUsers, setSubmittedUsers] = useState<string[]>([]);
   const [isAvatarLoadingError, setIsAvatarLoadingError] = useState<boolean[]>(
     []
   );
@@ -31,14 +31,19 @@ const AnilistUsersBox = () => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    setParamsUsers(Array.from(params.values()));
+    setParamsUsers(
+      Array.from(params.entries())
+        .sort((a, b) => +a[0] - +b[0])
+        .map(([, value]) => value)
+    );
   }, [params]);
 
   const isButtonDisabled: boolean =
     paramsUsers.length < 2 ||
     userCount !== paramsUsers.length ||
     !paramsUsers.every((p) => !!p) ||
-    usernames.sort().join(",") === paramsUsers.sort().join(",") ||
+    (submittedUsers.length === paramsUsers.length &&
+      submittedUsers.every((user) => paramsUsers.includes(user))) ||
     paramsUsers.filter((item, index) => paramsUsers.indexOf(item) !== index)
       .length > 0 ||
     isAvatarLoadingError.includes(true);
@@ -68,6 +73,9 @@ const AnilistUsersBox = () => {
     window.history.replaceState(null, "", `/?${params}`);
   };
 
+  console.log("paramsUsers", paramsUsers);
+  console.log("submittedUsers", submittedUsers);
+
   return (
     <>
       <div className={style.container}>
@@ -76,7 +84,7 @@ const AnilistUsersBox = () => {
             <AnilistUser
               key={index}
               index={index}
-              username={params.get(String(index + 1)) || ""}
+              username={paramsUsers[index] || ""}
               handleChange={handleChange}
               handleAvatarStateChange={handleAvatarStateChange}
             />
@@ -105,14 +113,14 @@ const AnilistUsersBox = () => {
         <button
           disabled={isButtonDisabled}
           className={cs("btn", "btn-light")}
-          onClick={() => setUsernames(paramsUsers)}
+          onClick={() => setSubmittedUsers(paramsUsers)}
         >
           Get recommendations
         </button>
       </div>
 
-      {usernames && (
-        <AnimeList key={usernames.join(";")} usernames={usernames} />
+      {submittedUsers && (
+        <AnimeList key={submittedUsers.join(";")} usernames={submittedUsers} />
       )}
     </>
   );
