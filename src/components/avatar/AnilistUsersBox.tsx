@@ -21,8 +21,6 @@ const AnilistUsersBox = () => {
     [searchParams]
   );
 
-  console.log(isAvatarLoadingError);
-
   //handle rendering correct amount of users
   useEffect(() => {
     if (params.size > 4) {
@@ -45,21 +43,24 @@ const AnilistUsersBox = () => {
       .length > 0 ||
     isAvatarLoadingError.includes(true);
 
-  const handleAvatarStateChange = (index: number, isLoadingError: boolean) => {
-    setIsAvatarLoadingError((prev) => {
-      const newState = [...prev];
-      newState[index] = isLoadingError;
-      return newState;
-    });
-  };
+  const handleAvatarStateChange = useCallback(
+    (index: number, isLoadingError: boolean) => {
+      setIsAvatarLoadingError((prev) => {
+        const newState = [...prev];
+        newState[index] = isLoadingError;
+        return newState;
+      });
+    },
+    []
+  );
 
-  const handleChange = (
-    user: string,
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    params.set(user, e.target.value);
-    window.history.replaceState(null, "", `/?${params}`);
-  };
+  const handleChange = useCallback(
+    (user: string, e: React.ChangeEvent<HTMLInputElement>) => {
+      params.set(user, e.target.value);
+      window.history.replaceState(null, "", `/?${params}`);
+    },
+    [params]
+  );
 
   const handleRemoveUser = (user: string) => {
     setUserCount(userCount - 1);
