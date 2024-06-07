@@ -1,11 +1,13 @@
-import React, { CSSProperties } from "react";
+import React, { CSSProperties, useEffect } from "react";
 import SyncLoader from "react-spinners/SyncLoader";
 import style from "./AnilistAvatar.module.scss";
 import { useAnilistAvatar } from "@/hooks/useAnilist";
 import Image from "next/image";
 
 type AnilistAvatarProps = {
+  index: number;
   username: string;
+  handleAvatarStateChange: (index: number, isLoadingError: boolean) => void;
 };
 
 const override: CSSProperties = {
@@ -16,8 +18,20 @@ const override: CSSProperties = {
   alignItems: "center",
 };
 
-const AnilistAvatar: React.FC<AnilistAvatarProps> = ({ username }) => {
+const AnilistAvatar: React.FC<AnilistAvatarProps> = ({
+  index,
+  username,
+  handleAvatarStateChange,
+}) => {
   const { loading, error, data } = useAnilistAvatar(username || "");
+
+  useEffect(() => {
+    if (loading || error || data === undefined) {
+      handleAvatarStateChange(index, true);
+    } else {
+      handleAvatarStateChange(index, false);
+    }
+  }, [data, error, loading]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (error) {
     return <p className="text-danger">User not found</p>;

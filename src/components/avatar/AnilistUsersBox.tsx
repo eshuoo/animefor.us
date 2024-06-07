@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import style from "./AnilistUsersBox.module.scss";
 import AnilistUser from "@/components/avatar/AnilistUser";
@@ -11,12 +11,17 @@ const AnilistUsersBox = () => {
   const [userCount, setUserCount] = useState(2);
   const [paramsUsers, setParamsUsers] = useState<string[]>([]);
   const [usernames, setUsernames] = useState<string[]>([]);
+  const [isAvatarLoadingError, setIsAvatarLoadingError] = useState<boolean[]>(
+    []
+  );
 
   const searchParams = useSearchParams();
   const params = useMemo(
     () => new URLSearchParams(searchParams),
     [searchParams]
   );
+
+  console.log(isAvatarLoadingError);
 
   //handle rendering correct amount of users
   useEffect(() => {
@@ -35,13 +40,26 @@ const AnilistUsersBox = () => {
     paramsUsers.length < 2 ||
     userCount !== paramsUsers.length ||
     !paramsUsers.every((p) => !!p) ||
-    usernames.sort().join(",") === paramsUsers.sort().join(",");
+    usernames.sort().join(",") === paramsUsers.sort().join(",") ||
+    paramsUsers.filter((item, index) => paramsUsers.indexOf(item) !== index)
+      .length > 0 ||
+    isAvatarLoadingError.includes(true);
 
-  const handleChange =
-    (user: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      params.set(user, e.target.value);
-      window.history.replaceState(null, "", `/?${params}`);
-    };
+  const handleAvatarStateChange = (index: number, isLoadingError: boolean) => {
+    setIsAvatarLoadingError((prev) => {
+      const newState = [...prev];
+      newState[index] = isLoadingError;
+      return newState;
+    });
+  };
+
+  const handleChange = (
+    user: string,
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    params.set(user, e.target.value);
+    window.history.replaceState(null, "", `/?${params}`);
+  };
 
   const handleRemoveUser = (user: string) => {
     setUserCount(userCount - 1);
@@ -56,8 +74,10 @@ const AnilistUsersBox = () => {
           {Array.from({ length: userCount }).map((_, index) => (
             <AnilistUser
               key={index}
+              index={index}
               username={params.get(String(index + 1)) || ""}
-              handleChange={handleChange(String(index + 1))}
+              handleChange={handleChange}
+              handleAvatarStateChange={handleAvatarStateChange}
             />
           ))}
           <div className={cs(style.buttons_container)}>
