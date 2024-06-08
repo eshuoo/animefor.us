@@ -15,6 +15,7 @@ const AnilistUsersBox = () => {
     []
   );
 
+  // get search params
   const searchParams = useSearchParams();
   const params = useMemo(
     () => new URLSearchParams(searchParams),
@@ -30,6 +31,7 @@ const AnilistUsersBox = () => {
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // update paramsUsers when params change
   useEffect(() => {
     setParamsUsers(
       Array.from(params.entries())
@@ -38,16 +40,21 @@ const AnilistUsersBox = () => {
     );
   }, [params]);
 
-  const isButtonDisabled: boolean =
-    paramsUsers.length < 2 ||
-    userCount !== paramsUsers.length ||
-    !paramsUsers.every((p) => !!p) ||
-    (submittedUsers.length === paramsUsers.length &&
-      submittedUsers.every((user) => paramsUsers.includes(user))) ||
-    paramsUsers.filter((item, index) => paramsUsers.indexOf(item) !== index)
-      .length > 0 ||
-    isAvatarLoadingError.includes(true);
+  // check if button should be disabled
+  const isButtonDisabled = useMemo(() => {
+    return (
+      paramsUsers.length < 2 ||
+      userCount !== paramsUsers.length ||
+      !paramsUsers.every((p) => !!p) ||
+      (submittedUsers.length === paramsUsers.length &&
+        submittedUsers.every((user) => paramsUsers.includes(user))) ||
+      paramsUsers.filter((item, index) => paramsUsers.indexOf(item) !== index)
+        .length > 0 ||
+      isAvatarLoadingError.includes(true)
+    );
+  }, [paramsUsers, userCount, submittedUsers, isAvatarLoadingError]);
 
+  // handle avatar loading error to disable button
   const handleAvatarStateChange = useCallback(
     (index: number, isLoadingError: boolean) => {
       setIsAvatarLoadingError((prev) => {
@@ -59,6 +66,14 @@ const AnilistUsersBox = () => {
     []
   );
 
+  const handleSubmit = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      setSubmittedUsers(paramsUsers);
+    },
+    [paramsUsers]
+  );
+
   const handleChange = useCallback(
     (user: string, e: React.ChangeEvent<HTMLInputElement>) => {
       params.set(user, e.target.value);
@@ -67,18 +82,18 @@ const AnilistUsersBox = () => {
     [params]
   );
 
-  const handleRemoveUser = (user: string) => {
-    setUserCount(userCount - 1);
-    params.delete(user);
-    window.history.replaceState(null, "", `/?${params}`);
-  };
-
-  console.log("paramsUsers", paramsUsers);
-  console.log("submittedUsers", submittedUsers);
+  const handleRemoveUser = useCallback(
+    (user: string) => {
+      setUserCount((prevCount) => prevCount - 1);
+      params.delete(user);
+      window.history.replaceState(null, "", `/?${params}`);
+    },
+    [params]
+  );
 
   return (
     <>
-      <div className={style.container}>
+      <form className={style.container} onSubmit={handleSubmit}>
         <div className={style.users_container}>
           {Array.from({ length: userCount }).map((_, index) => (
             <AnilistUser
@@ -92,6 +107,7 @@ const AnilistUsersBox = () => {
           <div className={cs(style.buttons_container)}>
             {userCount > 2 && (
               <button
+                type="button"
                 className="btn btn-danger"
                 onClick={() => handleRemoveUser(String(userCount))}
               >
@@ -100,6 +116,7 @@ const AnilistUsersBox = () => {
             )}
             {userCount <= 3 && (
               <button
+                type="button"
                 className="btn btn-success"
                 onClick={() => setUserCount(userCount + 1)}
               >
@@ -111,13 +128,13 @@ const AnilistUsersBox = () => {
         {/* ---> */}
         {/* <UsersSelect users={} onChange={() => setUsers} /> */}
         <button
+          type="submit"
           disabled={isButtonDisabled}
           className={cs("btn", "btn-light")}
-          onClick={() => setSubmittedUsers(paramsUsers)}
         >
           Get recommendations
         </button>
-      </div>
+      </form>
 
       {submittedUsers && (
         <AnimeList key={submittedUsers.join(";")} usernames={submittedUsers} />

@@ -5,10 +5,10 @@ import { UsersSkeleton } from "@/components/ui/skeletons";
 
 //TODO: make this absolute positioning app_container bullshit shenanigans work
 //TODO: make UsernameSearch component
-//TODO: searchParams tylko jako mirror a nie state
 //TODO: add proper avatar error and anime error handling
-//TODO: remove unnecessary rendering
-//TODO: change inputs to actual form
+//TODO: searchParams tylko jako mirror a nie state
+//TODO: add preferred title type
+//TODO: footer header
 
 const App = () => {
   return (
