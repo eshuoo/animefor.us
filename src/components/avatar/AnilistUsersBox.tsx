@@ -66,30 +66,27 @@ const AnilistUsersBox = () => {
     []
   );
 
-  const handleSubmit = useCallback(
-    (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      setSubmittedUsers(paramsUsers);
-    },
-    [paramsUsers]
-  );
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setSubmittedUsers(paramsUsers);
+  };
 
-  const handleChange = useCallback(
-    (user: string, e: React.ChangeEvent<HTMLInputElement>) => {
-      params.set(user, e.target.value);
-      window.history.replaceState(null, "", `/?${params}`);
-    },
-    [params]
-  );
+  const handleChange = (
+    user: string,
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    params.set(user, e.target.value);
+    window.history.replaceState(null, "", `/?${params}`);
+  };
 
-  const handleRemoveUser = useCallback(
-    (user: string) => {
-      setUserCount((prevCount) => prevCount - 1);
-      params.delete(user);
-      window.history.replaceState(null, "", `/?${params}`);
-    },
-    [params]
-  );
+  const handleRemoveUser = (user: string) => {
+    setUserCount((prevCount) => prevCount - 1);
+    params.delete(user);
+    window.history.replaceState(null, "", `/?${params}`);
+  };
+
+  console.log("submittedUsers", submittedUsers);
+  console.log("submittedUsers", !!submittedUsers);
 
   return (
     <>
@@ -105,38 +102,42 @@ const AnilistUsersBox = () => {
             />
           ))}
           <div className={cs(style.buttons_container)}>
-            {userCount > 2 && (
-              <button
-                type="button"
-                className="btn btn-danger"
-                onClick={() => handleRemoveUser(String(userCount))}
-              >
-                <b>-</b>
-              </button>
-            )}
-            {userCount <= 3 && (
-              <button
-                type="button"
-                className="btn btn-success"
-                onClick={() => setUserCount(userCount + 1)}
-              >
-                <b>+</b>
-              </button>
-            )}
+            <button
+              type="button"
+              className={cs("btn", {
+                "btn-danger": userCount > 2,
+                "btn-outline-danger disabled": userCount <= 2,
+              })}
+              onClick={() => handleRemoveUser(String(userCount))}
+            >
+              <b>-</b>
+            </button>
+            <button
+              type="button"
+              className={cs("btn", {
+                "btn-success": userCount <= 3,
+                "btn-outline-success disabled": userCount > 3,
+              })}
+              onClick={() => setUserCount(userCount + 1)}
+            >
+              <b>+</b>
+            </button>
           </div>
         </div>
         {/* ---> */}
         {/* <UsersSelect users={} onChange={() => setUsers} /> */}
         <button
           type="submit"
-          disabled={isButtonDisabled}
-          className={cs("btn", "btn-light")}
+          className={cs("btn", {
+            "btn-primary": !isButtonDisabled,
+            "btn-outline-primary disabled": isButtonDisabled,
+          })}
         >
           Get recommendations
         </button>
       </form>
 
-      {submittedUsers && (
+      {submittedUsers.length > 0 && (
         <AnimeList key={submittedUsers.join(";")} usernames={submittedUsers} />
       )}
     </>

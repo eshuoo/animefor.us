@@ -8,7 +8,7 @@ import { UsersSkeleton } from "@/components/ui/skeletons";
 //TODO: add proper avatar error and anime error handling
 //TODO: searchParams tylko jako mirror a nie state
 //TODO: add preferred title type
-//TODO: footer header
+//TODO: add header
 
 const App = () => {
   return (
