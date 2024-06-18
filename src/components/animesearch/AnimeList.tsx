@@ -12,10 +12,10 @@ type AnimeListProps = {
 };
 
 const AnimeList: React.FC<AnimeListProps> = ({ usernames }) => {
-  const { data, loading, error } = useAnilistAnime(usernames);
-
   const [commonMedia, setCommonMedia] = useState<CommonMediaCollection[]>([]);
   const [titleFormat, setTitleFormat] = useState<TitleFormats>("english");
+
+  const { data, loading, error } = useAnilistAnime(usernames);
 
   useEffect(() => {
     if (!data) {
@@ -52,7 +52,7 @@ const AnimeList: React.FC<AnimeListProps> = ({ usernames }) => {
   if (!commonMedia.length && data) return <div>No common anime found</div>;
 
   return (
-    <div>
+    <div className="container-md">
       <LanguageSelector
         titleFormat={titleFormat}
         setTitleFormat={setTitleFormat}
