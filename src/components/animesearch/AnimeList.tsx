@@ -1,21 +1,21 @@
 import React, { useState, useEffect, CSSProperties, memo } from "react";
 import { useAnilistAnime } from "@/hooks/useAnilist";
+import { TitleFormats } from "@/lib/query.interfaces";
 import { getCommonPlanning, CommonMediaCollection } from "@/lib/utility";
 import Image from "next/image";
 
 import styles from "./AnimeList.module.scss";
+import LanguageSelector from "./LanguageSelector";
 
 type AnimeListProps = {
   usernames: string[];
 };
 
-type TitleFormat = "romaji" | "english" | "native";
-
 const AnimeList: React.FC<AnimeListProps> = ({ usernames }) => {
   const { data, loading, error } = useAnilistAnime(usernames);
 
   const [commonMedia, setCommonMedia] = useState<CommonMediaCollection[]>([]);
-  const [titleFormat, setTitleFormat] = useState<TitleFormat>("romaji");
+  const [titleFormat, setTitleFormat] = useState<TitleFormats>("english");
 
   useEffect(() => {
     if (!data) {
@@ -47,58 +47,16 @@ const AnimeList: React.FC<AnimeListProps> = ({ usernames }) => {
     return { color: `rgb(255, 0, 0)` };
   };
 
-  const handleLanguageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTitleFormat(e.target.id as TitleFormat);
-  };
-
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error</div>;
   if (!commonMedia.length && data) return <div>No common anime found</div>;
 
   return (
     <div>
-      <div className="btn-group d-flex justify-content-center">
-        <input
-          type="radio"
-          className="btn-check"
-          name="language"
-          id="romaji"
-          autoComplete="off"
-          onChange={handleLanguageChange}
-          checked={titleFormat === "romaji"}
-        />
-        <label className="btn btn-outline-primary flex-grow-0" htmlFor="romaji">
-          Romaji
-        </label>
-        <input
-          type="radio"
-          className="btn-check"
-          name="language"
-          id="english"
-          autoComplete="off"
-          onChange={handleLanguageChange}
-          checked={titleFormat === "english"}
-        />
-        <label
-          className="btn btn-outline-primary flex-grow-0"
-          htmlFor="english"
-        >
-          English
-        </label>
-        <input
-          type="radio"
-          className="btn-check"
-          name="language"
-          id="native"
-          autoComplete="off"
-          onChange={handleLanguageChange}
-          checked={titleFormat === "native"}
-        />
-        <label className="btn btn-outline-primary flex-grow-0" htmlFor="native">
-          Native
-        </label>
-      </div>
-
+      <LanguageSelector
+        titleFormat={titleFormat}
+        setTitleFormat={setTitleFormat}
+      />
       {commonMedia.map(({ media, users }) => (
         <a
           key={media.siteUrl}

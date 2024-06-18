@@ -27,6 +27,8 @@ export interface Media {
   meanScore: number;
 }
 
+export type TitleFormats = "romaji" | "english" | "native";
+
 interface MediaEntry {
   media: Media;
 }
