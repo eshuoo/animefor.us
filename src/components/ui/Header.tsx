@@ -5,7 +5,7 @@ const Header: React.FC = () => {
   return (
     <header>
       <nav className="navbar bg-primary">
-        <div className="container-fluid">
+        <div className="container-md">
           <a className="navbar-brand text-white" href="/">
             AnimeFor.Us
           </a>
