@@ -37,7 +37,7 @@ const AnilistAvatar: React.FC<AnilistAvatarProps> = ({
     return <p className="text-danger">User not found</p>;
   }
   if (loading || data === undefined) {
-    return <SyncLoader color="darkslateblue" cssOverride={override} />;
+    return <SyncLoader color="#6F42C1" cssOverride={override} />;
   }
 
   return (

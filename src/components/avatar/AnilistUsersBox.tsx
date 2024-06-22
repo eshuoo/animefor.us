@@ -85,9 +85,6 @@ const AnilistUsersBox = () => {
     window.history.replaceState(null, "", `/?${params}`);
   };
 
-  console.log("submittedUsers", submittedUsers);
-  console.log("submittedUsers", !!submittedUsers);
-
   return (
     <>
       <form className={style.container} onSubmit={handleSubmit}>
@@ -101,40 +98,40 @@ const AnilistUsersBox = () => {
               handleAvatarStateChange={handleAvatarStateChange}
             />
           ))}
-          <div className={cs(style.buttons_container)}>
-            <button
-              type="button"
-              className={cs("btn", {
-                "btn-danger": userCount > 2,
-                "btn-outline-danger disabled": userCount <= 2,
-              })}
-              onClick={() => handleRemoveUser(String(userCount))}
-            >
-              <b>-</b>
-            </button>
-            <button
-              type="button"
-              className={cs("btn", {
-                "btn-success": userCount <= 3,
-                "btn-outline-success disabled": userCount > 3,
-              })}
-              onClick={() => setUserCount(userCount + 1)}
-            >
-              <b>+</b>
-            </button>
-          </div>
         </div>
         {/* ---> */}
         {/* <UsersSelect users={} onChange={() => setUsers} /> */}
-        <button
-          type="submit"
-          className={cs("btn", {
-            "btn-primary": !isButtonDisabled,
-            "btn-outline-primary disabled": isButtonDisabled,
-          })}
-        >
-          Get recommendations
-        </button>
+        <div className={cs(style.buttons_container)}>
+          <button
+            type="button"
+            className={cs("btn", style.user_count_button, {
+              "btn-danger": userCount > 2,
+              "btn-outline-danger disabled": userCount <= 2,
+            })}
+            onClick={() => handleRemoveUser(String(userCount))}
+          >
+            <b>-</b>
+          </button>
+          <button
+            type="submit"
+            className={cs("btn", {
+              "btn-primary": !isButtonDisabled,
+              "btn-outline-primary disabled": isButtonDisabled,
+            })}
+          >
+            Get recommendations
+          </button>
+          <button
+            type="button"
+            className={cs("btn", style.user_count_button, {
+              "btn-success": userCount <= 3,
+              "btn-outline-success disabled": userCount > 3,
+            })}
+            onClick={() => setUserCount(userCount + 1)}
+          >
+            <b>+</b>
+          </button>
+        </div>
       </form>
 
       {submittedUsers.length > 0 && (

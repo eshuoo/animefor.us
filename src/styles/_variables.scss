@@ -1,4 +1,8 @@
 // color variables
 $background-color: #1a1a1a;
 $forground-color: #ffffff;
-$violet: darkslateblue;
+$violet: #6f42c1;
+
+// update primary color
+$primary: $violet;
+@import "~bootstrap/scss/bootstrap";

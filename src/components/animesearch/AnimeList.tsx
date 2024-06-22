@@ -1,7 +1,11 @@
-import React, { useState, useEffect, CSSProperties, memo } from "react";
+import React, { useState, useEffect, memo } from "react";
 import { useAnilistAnime } from "@/hooks/useAnilist";
 import { TitleFormats } from "@/lib/query.interfaces";
-import { getCommonPlanning, CommonMediaCollection } from "@/lib/utility";
+import {
+  getCommonPlanning,
+  CommonMediaCollection,
+  calculateColor,
+} from "@/lib/utility";
 import Image from "next/image";
 
 import styles from "./AnimeList.module.scss";
@@ -14,6 +18,13 @@ type AnimeListProps = {
 const AnimeList: React.FC<AnimeListProps> = ({ usernames }) => {
   const [commonMedia, setCommonMedia] = useState<CommonMediaCollection[]>([]);
   const [titleFormat, setTitleFormat] = useState<TitleFormats>("english");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const titleFormat = localStorage.getItem("titleFormat") as TitleFormats;
+      titleFormat && setTitleFormat(titleFormat);
+    }
+  }, []);
 
   const { data, loading, error } = useAnilistAnime(usernames);
 
@@ -30,23 +41,6 @@ const AnimeList: React.FC<AnimeListProps> = ({ usernames }) => {
     );
   }, [data]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const calculateColor = (score: number): CSSProperties => {
-    if (score >= 90) {
-      return { color: `rgb(0, 255, 0)` };
-    }
-    if (score >= 70 && score < 90) {
-      const greenValue = 255;
-      const redValue = Math.floor(((90 - score) / 20) * 255);
-      return { color: `rgb(${redValue}, ${greenValue}, 0)` };
-    }
-    if (score >= 50 && score < 70) {
-      const redValue = 255;
-      const greenValue = 255 - Math.floor(((70 - score) / 20) * 255);
-      return { color: `rgb(${redValue}, ${greenValue}, 0)` };
-    }
-    return { color: `rgb(255, 0, 0)` };
-  };
-
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error</div>;
   if (!commonMedia.length && data) return <div>No common anime found</div>;
@@ -57,6 +51,7 @@ const AnimeList: React.FC<AnimeListProps> = ({ usernames }) => {
         titleFormat={titleFormat}
         setTitleFormat={setTitleFormat}
       />
+
       {commonMedia.map(({ media, users }) => (
         <a
           key={media.siteUrl}

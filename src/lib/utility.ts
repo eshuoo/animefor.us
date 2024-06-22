@@ -1,3 +1,4 @@
+import { CSSProperties } from "react";
 import { AnilistAnimeList, Media } from "./query.interfaces";
 
 export interface CommonMediaCollection {
@@ -69,3 +70,20 @@ export const getCommonPlanning = (
 
 //   return mediaCount;
 // };
+
+export const calculateColor = (score: number): CSSProperties => {
+  if (score >= 90) {
+    return { color: `rgb(0, 255, 0)` };
+  }
+  if (score >= 70 && score < 90) {
+    const greenValue = 255;
+    const redValue = Math.floor(((90 - score) / 20) * 255);
+    return { color: `rgb(${redValue}, ${greenValue}, 0)` };
+  }
+  if (score >= 50 && score < 70) {
+    const redValue = 255;
+    const greenValue = 255 - Math.floor(((70 - score) / 20) * 255);
+    return { color: `rgb(${redValue}, ${greenValue}, 0)` };
+  }
+  return { color: `rgb(255, 0, 0)` };
+};

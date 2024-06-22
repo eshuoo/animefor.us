@@ -12,46 +12,53 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
 }) => {
   const handleLanguageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitleFormat(e.target.id as TitleFormats);
+    localStorage.setItem("titleFormat", e.target.id);
   };
 
   return (
-    <div className="btn-group d-flex justify-content-center">
-      <input
-        type="radio"
-        className="btn-check"
-        name="language"
-        id="romaji"
-        autoComplete="off"
-        onChange={handleLanguageChange}
-        checked={titleFormat === "romaji"}
-      />
-      <label className="btn btn-outline-primary flex-grow-0" htmlFor="romaji">
-        Romaji
-      </label>
-      <input
-        type="radio"
-        className="btn-check"
-        name="language"
-        id="english"
-        autoComplete="off"
-        onChange={handleLanguageChange}
-        checked={titleFormat === "english"}
-      />
-      <label className="btn btn-outline-primary flex-grow-0" htmlFor="english">
-        English
-      </label>
-      <input
-        type="radio"
-        className="btn-check"
-        name="language"
-        id="native"
-        autoComplete="off"
-        onChange={handleLanguageChange}
-        checked={titleFormat === "native"}
-      />
-      <label className="btn btn-outline-primary flex-grow-0" htmlFor="native">
-        Native
-      </label>
+    <div className="container">
+      <p className="text-center mb-0">Select title format:</p>
+      <div className="btn-group d-flex justify-content-center">
+        <input
+          type="radio"
+          className="btn-check"
+          name="language"
+          id="romaji"
+          autoComplete="off"
+          onChange={handleLanguageChange}
+          checked={titleFormat === "romaji"}
+        />
+        <label className="btn btn-outline-primary flex-grow-0" htmlFor="romaji">
+          Romaji
+        </label>
+        <input
+          type="radio"
+          className="btn-check"
+          name="language"
+          id="english"
+          autoComplete="off"
+          onChange={handleLanguageChange}
+          checked={titleFormat === "english"}
+        />
+        <label
+          className="btn btn-outline-primary flex-grow-0"
+          htmlFor="english"
+        >
+          English
+        </label>
+        <input
+          type="radio"
+          className="btn-check"
+          name="language"
+          id="native"
+          autoComplete="off"
+          onChange={handleLanguageChange}
+          checked={titleFormat === "native"}
+        />
+        <label className="btn btn-outline-primary flex-grow-0" htmlFor="native">
+          Native
+        </label>
+      </div>
     </div>
   );
 };
