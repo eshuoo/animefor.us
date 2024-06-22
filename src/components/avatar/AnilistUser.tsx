@@ -26,14 +26,12 @@ const AnilistUser: React.FC<AnilistUserProps> = ({
 
   return (
     <div className={`${style.container}`}>
-      {username ? (
+      {username && (
         <AnilistAvatar
           index={index}
           username={username}
           handleAvatarStateChange={handleAvatarStateChange}
         />
-      ) : (
-        <p>Please enter a username</p>
       )}
       <input
         className="form-control"

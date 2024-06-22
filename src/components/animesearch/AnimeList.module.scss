@@ -10,7 +10,6 @@
   align-items: center;
 
   margin: 24px 32px;
-  padding: 12px;
   border-radius: 8px;
   border: none;
 
@@ -18,7 +17,7 @@
   color: #fff;
 
   img {
-    border-radius: 8px;
+    border-radius: 8px 0 0 8px;
     object-fit: cover;
   }
 
