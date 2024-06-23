@@ -68,7 +68,7 @@ const AnilistUsersBox = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmittedUsers(paramsUsers);
+    if (!isButtonDisabled) setSubmittedUsers(paramsUsers);
   };
 
   const handleChange = (
