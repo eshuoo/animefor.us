@@ -20,29 +20,19 @@ export const getCommonPlanning = (
           const media = entry.media.siteUrl;
           const commonMediaEntry = mediaCount.get(media);
 
-          // todo: optmalize without one set
-          if (commonMediaEntry) {
-            mediaCount.set(media, {
-              media: entry.media,
-              users: [...commonMediaEntry.users, username],
-            });
-          } else {
-            mediaCount.set(media, {
-              media: entry.media,
-              users: [username],
-            });
-          }
+          mediaCount.set(media, {
+            media: entry.media,
+            users: commonMediaEntry
+              ? [...commonMediaEntry.users, username]
+              : [username],
+          });
         });
       });
   });
-
   // filtering common entries
-  const commonMediaCollection: CommonMediaCollection[] = [];
-  mediaCount.forEach((commonMedia, _) => {
-    if (commonMedia.users.length >= 2) {
-      commonMediaCollection.push(commonMedia);
-    }
-  });
+  const commonMediaCollection = Array.from(mediaCount.values()).filter(
+    (media) => media.users.length >= 2
+  );
 
   // sorting by user count and score
   const sortedCommonMediaCollection = commonMediaCollection.sort((a, b) => {
@@ -76,14 +66,12 @@ export const calculateColor = (score: number): CSSProperties => {
     return { color: `rgb(0, 255, 0)` };
   }
   if (score >= 70 && score < 90) {
-    const greenValue = 255;
     const redValue = Math.floor(((90 - score) / 20) * 255);
-    return { color: `rgb(${redValue}, ${greenValue}, 0)` };
+    return { color: `rgb(${redValue}, 255, 0)` };
   }
   if (score >= 50 && score < 70) {
-    const redValue = 255;
     const greenValue = 255 - Math.floor(((70 - score) / 20) * 255);
-    return { color: `rgb(${redValue}, ${greenValue}, 0)` };
+    return { color: `rgb(255, ${greenValue}, 0)` };
   }
   return { color: `rgb(255, 0, 0)` };
 };
