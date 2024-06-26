@@ -24,10 +24,20 @@ const AnilistUsersBox = () => {
 
   //handle rendering correct amount of users
   useEffect(() => {
-    if (params.size > 4) {
-      window.history.pushState(null, "", `/`);
+    const paramsKeys = Array.from(params.keys()).map(Number);
+    const maxKey =
+      Math.max(...paramsKeys) === -Infinity ? 2 : Math.max(...paramsKeys);
+
+    if (params.size > 4 || maxKey > 4) {
+      window.history.replaceState(null, "", `/`);
     } else if (params.size > 2) {
       setUserCount(params.size);
+    }
+
+    for (let i = 1; i <= maxKey; i++) {
+      if (!params.has(String(i))) {
+        params.set(String(i), "");
+      }
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -88,7 +98,7 @@ const AnilistUsersBox = () => {
   return (
     <>
       <form className={style.container} onSubmit={handleSubmit}>
-        <div className={style.users_container}>
+        <div className={cs(style.users_container)}>
           {Array.from({ length: userCount }).map((_, index) => (
             <AnilistUser
               key={index}

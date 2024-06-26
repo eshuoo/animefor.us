@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import style from "./AnilistUser.module.scss";
 import AnilistAvatar from "./AnilistAvatar";
+import cs from "classnames";
 
 type AnilistUserProps = {
   index: number;
@@ -25,7 +26,7 @@ const AnilistUser: React.FC<AnilistUserProps> = ({
   }, [username]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <div className={`${style.container}`}>
+    <div className={cs(style.container)}>
       {username && (
         <AnilistAvatar
           index={index}
