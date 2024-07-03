@@ -65,8 +65,8 @@ const AnilistUsersBox = () => {
   }, [paramsUsers, userCount, submittedUsers, isAvatarLoadingError]);
 
   const calculateRow = useMemo(() => {
-    if (userCount === 3) return "col-6 col-sm-4 col-lg-auto";
     if (userCount >= 4) return "col-6 col-md-3 col-xl-auto";
+    if (userCount === 3) return "col-6 col-md-auto";
     return "col-6 col-sm-auto";
   }, [userCount]);
 
