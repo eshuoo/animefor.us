@@ -64,6 +64,12 @@ const AnilistUsersBox = () => {
     );
   }, [paramsUsers, userCount, submittedUsers, isAvatarLoadingError]);
 
+  const calculateRow = useMemo(() => {
+    if (userCount === 3) return "col-6 col-sm-4 col-lg-auto";
+    if (userCount >= 4) return "col-6 col-md-3 col-xl-auto";
+    return "col-6 col-sm-auto";
+  }, [userCount]);
+
   // handle avatar loading error to disable button
   const handleAvatarStateChange = useCallback(
     (index: number, isLoadingError: boolean) => {
@@ -97,17 +103,20 @@ const AnilistUsersBox = () => {
 
   return (
     <>
-      <form className={style.container} onSubmit={handleSubmit}>
-        <div className={cs(style.users_container)}>
-          {Array.from({ length: userCount }).map((_, index) => (
-            <AnilistUser
-              key={index}
-              index={index}
-              username={paramsUsers[index] || ""}
-              handleChange={handleChange}
-              handleAvatarStateChange={handleAvatarStateChange}
-            />
-          ))}
+      <form className={cs(style.container)} onSubmit={handleSubmit}>
+        <div className="container-lg">
+          <div className="row justify-content-center g-4">
+            {Array.from({ length: userCount }).map((_, index) => (
+              <AnilistUser
+                key={index}
+                index={index}
+                username={paramsUsers[index] || ""}
+                rows={calculateRow}
+                handleChange={handleChange}
+                handleAvatarStateChange={handleAvatarStateChange}
+              />
+            ))}
+          </div>
         </div>
         {/* ---> */}
         {/* <UsersSelect users={} onChange={() => setUsers} /> */}

@@ -6,6 +6,7 @@ import cs from "classnames";
 type AnilistUserProps = {
   index: number;
   username: string;
+  rows: string;
   handleChange: (user: string, e: React.ChangeEvent<HTMLInputElement>) => void;
   handleAvatarStateChange: (index: number, isLoadingError: boolean) => void;
 };
@@ -13,6 +14,7 @@ type AnilistUserProps = {
 const AnilistUser: React.FC<AnilistUserProps> = ({
   index,
   username,
+  rows,
   handleChange,
   handleAvatarStateChange,
 }) => {
@@ -26,21 +28,23 @@ const AnilistUser: React.FC<AnilistUserProps> = ({
   }, [username]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <div className={cs(style.container)}>
-      {username && (
-        <AnilistAvatar
-          index={index}
-          username={username}
-          handleAvatarStateChange={handleAvatarStateChange}
+    <div className={rows}>
+      <div className={cs(style.container)}>
+        {username && (
+          <AnilistAvatar
+            index={index}
+            username={username}
+            handleAvatarStateChange={handleAvatarStateChange}
+          />
+        )}
+        <input
+          className="form-control"
+          placeholder="Enter Anilist username"
+          type="text"
+          onChange={(e) => handleChange(String(index + 1), e)}
+          defaultValue={username}
         />
-      )}
-      <input
-        className="form-control"
-        placeholder="Enter Anilist username"
-        type="text"
-        onChange={(e) => handleChange(String(index + 1), e)}
-        defaultValue={username}
-      />
+      </div>
     </div>
   );
 };

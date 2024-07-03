@@ -5,26 +5,16 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: 24px;
   padding-top: 2rem;
   padding-bottom: 2rem;
-}
-
-.users_container {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  padding-left: 20px;
-  padding-right: 20px;
 }
 
 .buttons_container {
   height: 38px;
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 24px;
 
   .user_count_button {
     height: 38px;
