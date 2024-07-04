@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import style from "./AnilistUser.module.scss";
 import AnilistAvatar from "./AnilistAvatar";
 import cs from "classnames";
@@ -18,6 +18,8 @@ const AnilistUser: React.FC<AnilistUserProps> = ({
   handleChange,
   handleAvatarStateChange,
 }) => {
+  const ref = useRef<HTMLInputElement>(null);
+
   useEffect(() => {
     if (username) {
       handleAvatarStateChange(index, true);
@@ -26,6 +28,12 @@ const AnilistUser: React.FC<AnilistUserProps> = ({
       handleAvatarStateChange(index, false);
     };
   }, [username]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (ref.current && index > 1 && !username) {
+      ref.current.focus();
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className={rows}>
@@ -38,6 +46,7 @@ const AnilistUser: React.FC<AnilistUserProps> = ({
           />
         )}
         <input
+          ref={ref}
           className="form-control"
           placeholder="Enter Anilist username"
           type="text"
