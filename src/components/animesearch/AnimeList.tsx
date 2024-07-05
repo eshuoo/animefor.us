@@ -10,6 +10,7 @@ import Image from "next/image";
 
 import styles from "./AnimeList.module.scss";
 import LanguageSelector from "./LanguageSelector";
+import { AnimeSkeleton } from "../ui/skeletons";
 
 type AnimeListProps = {
   usernames: string[];
@@ -41,10 +42,10 @@ const AnimeList: React.FC<AnimeListProps> = ({ usernames }) => {
     );
   }, [data]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <AnimeSkeleton />;
   if (error) return <div>Error</div>;
   if (!commonMedia.length && data) return <div>No common anime found</div>;
-
+  return <AnimeSkeleton />;
   return (
     <div className="container-md">
       <LanguageSelector

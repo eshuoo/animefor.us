@@ -7,8 +7,8 @@ import { UsersSkeleton } from "@/components/ui/skeletons";
 //TODO: add UsernameSearch component
 //TODO: add proper avatar error and anime error handling
 //TODO: searchParams tylko jako mirror a nie state
-//TODO: add bootstrap skeleton to anime cards
 //TODO: add recommended anime besides already existing common planning
+//TODO: add bootstrap skeleton to anime cards
 
 const App = () => {
   return (

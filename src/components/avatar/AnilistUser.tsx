@@ -6,7 +6,7 @@ import cs from "classnames";
 type AnilistUserProps = {
   index: number;
   username: string;
-  rows: string;
+  cols: string;
   handleChange: (user: string, e: React.ChangeEvent<HTMLInputElement>) => void;
   handleAvatarStateChange: (index: number, isLoadingError: boolean) => void;
 };
@@ -14,7 +14,7 @@ type AnilistUserProps = {
 const AnilistUser: React.FC<AnilistUserProps> = ({
   index,
   username,
-  rows,
+  cols,
   handleChange,
   handleAvatarStateChange,
 }) => {
@@ -36,7 +36,7 @@ const AnilistUser: React.FC<AnilistUserProps> = ({
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <div className={rows}>
+    <div className={cols}>
       <div className={cs(style.container)}>
         {username && (
           <AnilistAvatar
