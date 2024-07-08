@@ -57,16 +57,22 @@ export const UsersSkeleton = () => {
 export const AnimeSkeleton = () => {
   return (
     <div className="container-md">
-      <div className={anime.animeListEntry}>
+      <div className={cs(anime.animeListEntry)}>
         <svg className={cs(anime.coverImage, "placeholder")} />
 
         <div className={cs(anime.description, "placeholder-glow")}>
-          <h4>{"   "}</h4>
+          <h4 className="placeholder placeholder-lg col-4 me-2" />
+          <h4 className="placeholder placeholder-lg col-2 me-2" />
+          <h4 className="placeholder placeholder-lg col-3" />
           <p>
-            Wanted by <span>{"   "}</span>
+            Wanted by <span className="placeholder col-1 me-1" />
+            <span className="placeholder col-2" />
           </p>
           <h4 className={anime.score}>
-            Mean score: <span style={{ color: `rgb(0, 255, 0)` }}>{"69"}</span>
+            Mean score:{" "}
+            <span className="placeholder" style={{ color: `rgb(69, 255, 0)` }}>
+              69
+            </span>
           </h4>
         </div>
       </div>

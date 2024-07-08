@@ -45,14 +45,13 @@ const AnimeList: React.FC<AnimeListProps> = ({ usernames }) => {
   if (loading) return <AnimeSkeleton />;
   if (error) return <div>Error</div>;
   if (!commonMedia.length && data) return <div>No common anime found</div>;
-  return <AnimeSkeleton />;
+
   return (
     <div className="container-md">
       <LanguageSelector
         titleFormat={titleFormat}
         setTitleFormat={setTitleFormat}
       />
-
       {commonMedia.map(({ media, users }) => (
         <a
           key={media.siteUrl}
