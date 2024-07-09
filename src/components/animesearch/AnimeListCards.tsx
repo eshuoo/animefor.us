@@ -40,7 +40,8 @@ const AnimeListCards: React.FC<AnimeListCardsProps> = ({
 
   if (loading) return <AnimeSkeleton />;
   if (error) return <div>Error</div>;
-  if (!commonMedia.length && data) return <div>No common anime found</div>;
+  if (!commonMedia.length && data)
+    return <p className="text-danger text-center">No common anime found</p>;
 
   return (
     <div>

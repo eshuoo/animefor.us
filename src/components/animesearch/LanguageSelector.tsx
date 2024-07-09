@@ -16,8 +16,8 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
   };
 
   return (
-    <div className="container">
-      <p className="text-center mb-0">Select title format:</p>
+    <div className="container mb-4">
+      <p className="text-center mb-1">Select title format:</p>
       <div className="btn-group d-flex justify-content-center">
         <input
           type="radio"
