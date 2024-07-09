@@ -22,7 +22,8 @@
     object-fit: cover;
   }
 
-  h4 {
+  h4,
+  h5 {
     padding: 0 0 4px;
     margin: 0;
   }
@@ -35,7 +36,7 @@
 
 .score {
   position: absolute;
-  bottom: 8px;
+  bottom: 4px;
   right: 12px;
 }
 
