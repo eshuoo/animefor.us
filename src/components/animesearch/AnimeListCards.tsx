@@ -22,15 +22,22 @@ const AnimeListCards: React.FC<AnimeListCardsProps> = ({
   titleFormat,
 }) => {
   const [commonMedia, setCommonMedia] = useState<CommonMediaCollection[]>([]);
+  const [recommendedMedia, setRecommendedMedia] = useState<
+    CommonMediaCollection[]
+  >([]);
 
   const { data, loading, error } = useAnilistAnime(usernames);
 
   useEffect(() => {
     if (!data) {
-      if (commonMedia) setCommonMedia([]);
+      if (commonMedia) {
+        setCommonMedia([]);
+        setRecommendedMedia([]);
+      }
       return;
     }
 
+    setRecommendedMedia([]);
     setCommonMedia(
       getCommonPlanning(data).filter(
         ({ media }) => media.status !== "NOT_YET_RELEASED"
