@@ -3,7 +3,8 @@ import Image from "next/image";
 
 import { useAnilistAnime } from "@/hooks/useAnilist";
 import {
-  getCommonPlanning,
+  getCommonAnime,
+  getRecommendedAnime,
   CommonMediaCollection,
   calculateColor,
 } from "@/lib/utility";
@@ -37,9 +38,9 @@ const AnimeListCards: React.FC<AnimeListCardsProps> = ({
       return;
     }
 
-    setRecommendedMedia([]);
+    setRecommendedMedia(getRecommendedAnime(data));
     setCommonMedia(
-      getCommonPlanning(data).filter(
+      getCommonAnime(data).filter(
         ({ media }) => media.status !== "NOT_YET_RELEASED"
       )
     );

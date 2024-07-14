@@ -94,31 +94,6 @@ const createDynamicAnilistAnimeQuery = (usernames: string[]) => {
         }
       }
     }
-  }
-  ${name}REPEATING: MediaListCollection(userName: $${name}, type: ANIME, status: REPEATING, sort: SCORE_DESC, perChunk: 20, chunk: 1) {
-    lists {
-      entries {
-        media {
-          siteUrl
-          recommendations(perPage: 10, sort:[RATING_DESC]) {
-            nodes {
-              mediaRecommendation {
-                title {
-                  romaji
-                  english
-                  native
-                }
-                siteUrl
-                coverImage {
-                  large
-                }
-                meanScore
-              }
-            }
-          }
-        }
-      }
-    }
   }`
   );
 

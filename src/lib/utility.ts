@@ -6,28 +6,30 @@ export interface CommonMediaCollection {
   users: string[];
 }
 
-export const getCommonPlanning = (
+export const getCommonAnime = (
   data: AnilistAnimeList
 ): CommonMediaCollection[] => {
   const mediaCount = new Map<string, CommonMediaCollection>();
 
   // search for common entries
   Object.entries(data).forEach(([username, mediaCollection]) => {
-    mediaCollection.lists
-      .filter((list) => list.isCustomList === false)
-      .forEach((list) => {
-        list.entries.forEach((entry) => {
-          const media = entry.media.siteUrl;
-          const commonMediaEntry = mediaCount.get(media);
+    console.log(username.toString.en);
+    if (username)
+      mediaCollection.lists
+        .filter((list) => list.isCustomList === false)
+        .forEach((list) => {
+          list.entries.forEach((entry) => {
+            const media = entry.media.siteUrl;
+            const commonMediaEntry = mediaCount.get(media);
 
-          mediaCount.set(media, {
-            media: entry.media,
-            users: commonMediaEntry
-              ? [...commonMediaEntry.users, username]
-              : [username],
+            mediaCount.set(media, {
+              media: entry.media,
+              users: commonMediaEntry
+                ? [...commonMediaEntry.users, username]
+                : [username],
+            });
           });
         });
-      });
   });
   // filtering common entries
   const commonMediaCollection = Array.from(mediaCount.values()).filter(
@@ -42,6 +44,19 @@ export const getCommonPlanning = (
   });
 
   return sortedCommonMediaCollection;
+};
+
+export const getRecommendedAnime = (
+  data: AnilistAnimeList
+): CommonMediaCollection | [] => {
+  const MediaCount = new Map<string, CommonMediaCollection>();
+
+  //todo: add sranie jebanie
+  //      zeby getcommonanime nie przelatywalo data 2 razy dla completed
+  //search for most recommended anime
+  console.log(Object.entries(data));
+
+  return [];
 };
 
 // export const getCommonAnime2 = (data: AnilistAnimeList) => {

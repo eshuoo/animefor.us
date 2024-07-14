@@ -25,6 +25,15 @@ export interface Media {
     | "CANCELLED"
     | "HIATUS";
   meanScore: number;
+  recommendations?: RecommendationNodes;
+}
+
+interface NodeEntry {
+  mediaRecommendation: Media;
+}
+
+interface RecommendationNodes {
+  nodes: NodeEntry;
 }
 
 export type TitleFormats = "romaji" | "english" | "native";
@@ -35,7 +44,7 @@ interface MediaEntry {
 
 interface MediaList {
   entries: MediaEntry[];
-  isCustomList: boolean;
+  isCustomList?: boolean;
 }
 
 interface UserMediaListCollection {
