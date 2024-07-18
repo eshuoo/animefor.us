@@ -13,8 +13,7 @@ export const getCommonAnime = (
 
   // search for common entries
   Object.entries(data).forEach(([username, mediaCollection]) => {
-    console.log(username.toString.en);
-    if (username)
+    if (!username.endsWith("COMPLETED"))
       mediaCollection.lists
         .filter((list) => list.isCustomList === false)
         .forEach((list) => {
@@ -48,13 +47,15 @@ export const getCommonAnime = (
 
 export const getRecommendedAnime = (
   data: AnilistAnimeList
-): CommonMediaCollection | [] => {
+): CommonMediaCollection[] => {
   const MediaCount = new Map<string, CommonMediaCollection>();
 
-  //todo: add sranie jebanie
-  //      zeby getcommonanime nie przelatywalo data 2 razy dla completed
-  //search for most recommended anime
-  console.log(Object.entries(data));
+  Object.entries(data).forEach(([username, mediaCollection]) => {
+    if (username.endsWith("COMPLETED") || username.endsWith("REPEATING")) {
+      console.log(username);
+      //todo: implement recommended anime
+    }
+  });
 
   return [];
 };
