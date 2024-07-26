@@ -33,7 +33,7 @@ interface NodeEntry {
 }
 
 interface RecommendationNodes {
-  nodes: NodeEntry;
+  nodes: NodeEntry[];
 }
 
 export type TitleFormats = "romaji" | "english" | "native";

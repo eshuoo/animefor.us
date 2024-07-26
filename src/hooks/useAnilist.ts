@@ -50,6 +50,16 @@ const createDynamicAnilistAnimeQuery = (usernames: string[]) => {
 
   const userQueries = usernames.map(
     (name) => `
+    ${name}ALL: MediaListCollection(userName: $${name}, type: ANIME) {
+      lists {
+        isCustomList
+        entries {
+          media {
+            siteUrl
+          }
+        }
+      }
+    }
     ${name}: MediaListCollection(userName: $${name}, type: ANIME, status: PLANNING) {
       lists {
         isCustomList

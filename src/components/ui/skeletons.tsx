@@ -1,6 +1,6 @@
 import user from "@/components/avatar/AnilistUser.module.scss";
 import users from "@/components/avatar/AnilistUsersBox.module.scss";
-import anime from "@/components/animesearch/AnimeListCards.module.scss";
+import anime from "@/components/animesearch/AnimeListCard.module.scss";
 import animation from "./skeletons.module.scss";
 import cs from "classnames";
 

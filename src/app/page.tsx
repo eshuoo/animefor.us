@@ -6,7 +6,7 @@ import { UsersSkeleton } from "@/components/ui/skeletons";
 //TODO: add absolute positioning app_container bullshit shenanigans
 //TODO: add UsernameSearch component
 //TODO: searchParams tylko jako mirror a nie state
-//TODO: add recommended anime besides already existing common planning
+//TODO: make recommended anime list look fucking cool
 
 const App = () => {
   return (

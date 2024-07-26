@@ -1,17 +1,11 @@
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
 
 import { useAnilistAnime } from "@/hooks/useAnilist";
-import {
-  getCommonAnime,
-  getRecommendedAnime,
-  CommonMediaCollection,
-  calculateColor,
-} from "@/lib/utility";
+import { getCommonAnime, CommonMediaCollection } from "@/lib/utility";
 import { TitleFormats } from "@/lib/query.interfaces";
 
-import styles from "./AnimeListCards.module.scss";
 import { AnimeSkeleton } from "../ui/skeletons";
+import AnimeListCard from "./AnimeListCard";
 
 type AnimeListCardsProps = {
   usernames: string[];
@@ -38,12 +32,11 @@ const AnimeListCards: React.FC<AnimeListCardsProps> = ({
       return;
     }
 
-    setRecommendedMedia(getRecommendedAnime(data));
+    const { commonMediaList, recommendedMediaList } = getCommonAnime(data);
     setCommonMedia(
-      getCommonAnime(data).filter(
-        ({ media }) => media.status !== "NOT_YET_RELEASED"
-      )
+      commonMediaList.filter(({ media }) => media.status !== "NOT_YET_RELEASED")
     );
+    setRecommendedMedia(recommendedMediaList);
   }, [data]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (loading) return <AnimeSkeleton />;
@@ -54,48 +47,22 @@ const AnimeListCards: React.FC<AnimeListCardsProps> = ({
   return (
     <div>
       {commonMedia.map(({ media, users }) => (
-        <a
+        <AnimeListCard
           key={media.siteUrl}
-          href={media.siteUrl}
-          className={styles.link}
-          target="_blank"
-        >
-          <div className={styles.animeListEntry}>
-            <div className={styles.coverImage}>
-              <Image
-                fill
-                sizes="128px"
-                src={media.coverImage.large}
-                alt={`Cover image for ${
-                  media.title[titleFormat] ??
-                  media.title.english ??
-                  media.title.romaji ??
-                  media.title.native
-                }`}
-              />
-            </div>
-
-            <div className={styles.description}>
-              <h4>
-                {media.title[titleFormat] ??
-                  media.title.english ??
-                  media.title.romaji ??
-                  media.title.native}
-              </h4>
-              <p>
-                Wanted by <b>{users.join(", ")}</b>
-              </p>
-              {media.meanScore && (
-                <h5 className={styles.score}>
-                  Mean score:{" "}
-                  <span className="h4" style={calculateColor(media.meanScore)}>
-                    {media.meanScore}{" "}
-                  </span>
-                </h5>
-              )}
-            </div>
-          </div>
-        </a>
+          media={media}
+          users={users}
+          titleFormat={titleFormat}
+          usersText="Wanted by"
+        />
+      ))}
+      {recommendedMedia.map(({ media, users }) => (
+        <AnimeListCard
+          key={media.siteUrl}
+          media={media}
+          users={users}
+          titleFormat={titleFormat}
+          usersText="Recommended for"
+        />
       ))}
     </div>
   );

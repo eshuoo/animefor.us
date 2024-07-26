@@ -8,20 +8,39 @@ export interface CommonMediaCollection {
 
 export const getCommonAnime = (
   data: AnilistAnimeList
-): CommonMediaCollection[] => {
-  const mediaCount = new Map<string, CommonMediaCollection>();
+): {
+  commonMediaList: CommonMediaCollection[];
+  recommendedMediaList: CommonMediaCollection[];
+} => {
+  const commonMediaCount = new Map<string, CommonMediaCollection>();
+  const recommendedMediaCount = new Map<string, CommonMediaCollection>();
+  const knownAnime = new Set<string>();
 
-  // search for common entries
+  // generate watchedAnime set
   Object.entries(data).forEach(([username, mediaCollection]) => {
-    if (!username.endsWith("COMPLETED"))
+    if (username.endsWith("ALL")) {
+      mediaCollection.lists.forEach((list) => {
+        list.entries.forEach((entry) => {
+          knownAnime.add(entry.media.siteUrl);
+        });
+      });
+    }
+  });
+  // search for common entries and recommendations
+  Object.entries(data).forEach(([username, mediaCollection]) => {
+    if (
+      !username.endsWith("ALL") &&
+      !username.endsWith("REPEATING") &&
+      !username.endsWith("COMPLETED")
+    ) {
       mediaCollection.lists
         .filter((list) => list.isCustomList === false)
         .forEach((list) => {
           list.entries.forEach((entry) => {
             const media = entry.media.siteUrl;
-            const commonMediaEntry = mediaCount.get(media);
+            const commonMediaEntry = commonMediaCount.get(media);
 
-            mediaCount.set(media, {
+            commonMediaCount.set(media, {
               media: entry.media,
               users: commonMediaEntry
                 ? [...commonMediaEntry.users, username]
@@ -29,11 +48,48 @@ export const getCommonAnime = (
             });
           });
         });
+    }
+    if (username.endsWith("COMPLETED") || username.endsWith("REPEATING")) {
+      mediaCollection.lists.forEach((list) => {
+        list.entries.forEach((entry) => {
+          entry.media.recommendations?.nodes.forEach((node) => {
+            if (
+              node.mediaRecommendation !== null &&
+              !knownAnime.has(node.mediaRecommendation.siteUrl)
+            ) {
+              const media = node.mediaRecommendation.siteUrl;
+              const recommendedMediaEntry = recommendedMediaCount.get(media);
+
+              const regex = /(COMPLETED|REPEATING)$/;
+
+              recommendedMediaCount.set(media, {
+                media: node.mediaRecommendation,
+                users: recommendedMediaEntry
+                  ? [
+                      ...recommendedMediaEntry.users,
+                      username.replace(regex, ""),
+                    ]
+                  : [username.replace(regex, "")],
+              });
+            }
+          });
+        });
+      });
+    }
   });
-  // filtering common entries
-  const commonMediaCollection = Array.from(mediaCount.values()).filter(
+
+  // converting Map to array and filtering common entries
+  const commonMediaCollection = Array.from(commonMediaCount.values()).filter(
     (media) => media.users.length >= 2
   );
+  const recommendedMediaCollection = Array.from(recommendedMediaCount.values())
+    .map((media) => {
+      const users = new Set(media.users);
+      return { media: media.media, users: Array.from(users) };
+    })
+    .filter((media) => {
+      return media.users.length >= 2;
+    });
 
   // sorting by user count and score
   const sortedCommonMediaCollection = commonMediaCollection.sort((a, b) => {
@@ -41,23 +97,20 @@ export const getCommonAnime = (
       b.users.length - a.users.length || b.media.meanScore - a.media.meanScore
     );
   });
+  const sortedRecommendedMediaCollection = recommendedMediaCollection
+    .sort((a, b) => {
+      return (
+        b.users.length - a.users.length || b.media.meanScore - a.media.meanScore
+      );
+    })
+    .slice(0, 10);
 
-  return sortedCommonMediaCollection;
-};
+  console.log(sortedRecommendedMediaCollection);
 
-export const getRecommendedAnime = (
-  data: AnilistAnimeList
-): CommonMediaCollection[] => {
-  const MediaCount = new Map<string, CommonMediaCollection>();
-
-  Object.entries(data).forEach(([username, mediaCollection]) => {
-    if (username.endsWith("COMPLETED") || username.endsWith("REPEATING")) {
-      console.log(username);
-      //todo: implement recommended anime
-    }
-  });
-
-  return [];
+  return {
+    commonMediaList: sortedCommonMediaCollection,
+    recommendedMediaList: sortedRecommendedMediaCollection,
+  };
 };
 
 // export const getCommonAnime2 = (data: AnilistAnimeList) => {
