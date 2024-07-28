@@ -7,7 +7,7 @@ import { UsersSkeleton } from "@/components/ui/skeletons";
 //todo: add UsernameSearch component
 //todo: searchParams tylko jako mirror a nie state
 //todo: add pagination
-//todo: fix flashing animelist error message
+//todo: switch po boku strony z typami bajek
 
 const App = () => {
   return (
