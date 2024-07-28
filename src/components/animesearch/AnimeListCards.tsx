@@ -97,7 +97,6 @@ const AnimeListCards: React.FC<AnimeListCardsProps> = ({
           users={users}
           titleFormat={titleFormat}
           usersText="Recommended for"
-          noAnimeMessage="No recommendations for you ●︿●"
         />
       ))}
     </div>
