@@ -20,6 +20,7 @@ const AnimeListCards: React.FC<AnimeListCardsProps> = ({
   const [recommendedMedia, setRecommendedMedia] = useState<
     CommonMediaCollection[]
   >([]);
+  const [finishedProcessingAnime, setFinishedProcessingAnime] = useState(false);
 
   const { data, loading, error } = useAnilistAnime(usernames);
 
@@ -32,13 +33,19 @@ const AnimeListCards: React.FC<AnimeListCardsProps> = ({
       return;
     }
 
-    const { commonMediaList, recommendedMediaList } = getCommonAnime(data);
+    const { commonMediaList, recommendedMediaList, finishedProcessingAnime } =
+      getCommonAnime(data);
     setCommonMedia(commonMediaList);
     setRecommendedMedia(recommendedMediaList);
+    setFinishedProcessingAnime(finishedProcessingAnime);
   }, [data]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const noCommonnime = (
-    <p className="text-danger text-center mt-5">{`No common anime found.\nTry adding some more!`}</p>
+  const noCommonAnime = (
+    <p className="text-danger text-center mt-5">
+      No common anime found.
+      <br />
+      Try adding some more!
+    </p>
   );
   const noRecommendedAnime = (
     <p className="text-danger text-center mt-5">
@@ -46,7 +53,7 @@ const AnimeListCards: React.FC<AnimeListCardsProps> = ({
     </p>
   );
 
-  if (loading)
+  if (loading || !finishedProcessingAnime)
     return (
       <div>
         <h3 className="text-center mt-5">Common planning</h3>
@@ -64,10 +71,12 @@ const AnimeListCards: React.FC<AnimeListCardsProps> = ({
 
   if (error)
     return (
-      <p className="text-danger text-center mt-5">{`Something went wrong (✖﹏✖)\nTry again later!`}</p>
+      <p className="text-danger text-center mt-5">
+        Something went wrong (✖﹏✖)
+        <br />
+        Try again later!
+      </p>
     );
-
-  !commonMedia.length && !recommendedMedia.length && data;
 
   return (
     <div>
@@ -75,7 +84,7 @@ const AnimeListCards: React.FC<AnimeListCardsProps> = ({
       <p className="lead text-center text-white-50">
         You all may have something in common.
       </p>
-      {!commonMedia.length && data && noCommonnime}
+      {!commonMedia.length && data && noCommonAnime}
       {commonMedia.map(({ media, users }) => (
         <AnimeListCard
           key={media.siteUrl}

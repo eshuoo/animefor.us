@@ -11,6 +11,7 @@ export const getCommonAnime = (
 ): {
   commonMediaList: CommonMediaCollection[];
   recommendedMediaList: CommonMediaCollection[];
+  finishedProcessingAnime: boolean;
 } => {
   const commonMediaCount = new Map<string, CommonMediaCollection>();
   const recommendedMediaCount = new Map<string, CommonMediaCollection>();
@@ -112,6 +113,7 @@ export const getCommonAnime = (
   return {
     commonMediaList: sortedCommonMediaCollection,
     recommendedMediaList: sortedRecommendedMediaCollection,
+    finishedProcessingAnime: true,
   };
 };
 
