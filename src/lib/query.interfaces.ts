@@ -25,6 +25,7 @@ export interface Media {
     | "CANCELLED"
     | "HIATUS";
   meanScore: number;
+  format: Format;
   recommendations?: RecommendationNodes;
 }
 
@@ -37,6 +38,18 @@ interface RecommendationNodes {
 }
 
 export type TitleFormats = "romaji" | "english" | "native";
+
+type Format =
+  | "TV"
+  | "TV_SHORT"
+  | "MOVIE"
+  | "SPECIAL"
+  | "OVA"
+  | "ONA"
+  | "MUSIC"
+  | "MANGA"
+  | "NOVEL"
+  | "ONE_SHOT";
 
 interface MediaEntry {
   media: Media;

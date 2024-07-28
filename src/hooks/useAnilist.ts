@@ -50,17 +50,7 @@ const createDynamicAnilistAnimeQuery = (usernames: string[]) => {
 
   const userQueries = usernames.map(
     (name) => `
-    ${name}ALL: MediaListCollection(userName: $${name}, type: ANIME) {
-      lists {
-        isCustomList
-        entries {
-          media {
-            siteUrl
-          }
-        }
-      }
-    }
-    ${name}: MediaListCollection(userName: $${name}, type: ANIME, status: PLANNING) {
+    ${name}PLANNING: MediaListCollection(userName: $${name}, type: ANIME, status: PLANNING) {
       lists {
         isCustomList
         entries {
@@ -76,6 +66,46 @@ const createDynamicAnilistAnimeQuery = (usernames: string[]) => {
             }
             status
             meanScore
+          }
+        }
+      }
+    }
+    ${name}DROPPED: MediaListCollection(userName: $${name}, type: ANIME, status: DROPPED) {
+      lists {
+        isCustomList
+        entries {
+          media {
+            siteUrl
+          }
+        }
+      }
+    }
+    ${name}CURRENT: MediaListCollection(userName: $${name}, type: ANIME, status: CURRENT) {
+      lists {
+        isCustomList
+        entries {
+          media {
+            siteUrl
+          }
+        }
+      }
+    }
+    ${name}PAUSED: MediaListCollection(userName: $${name}, type: ANIME, status: PAUSED) {
+      lists {
+        isCustomList
+        entries {
+          media {
+            siteUrl
+          }
+        }
+      }
+    }
+    ${name}COMPLETED_ALL: MediaListCollection(userName: $${name}, type: ANIME, status: COMPLETED) {
+      lists {
+        isCustomList
+        entries {
+          media {
+            siteUrl
           }
         }
       }
@@ -98,6 +128,7 @@ const createDynamicAnilistAnimeQuery = (usernames: string[]) => {
                     large
                   }
                   meanScore
+                  format
                 }
               }
             }
@@ -123,6 +154,7 @@ const createDynamicAnilistAnimeQuery = (usernames: string[]) => {
                     large
                   }
                   meanScore
+                  format
                 }
               }
             }

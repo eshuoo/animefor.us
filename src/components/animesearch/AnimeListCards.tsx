@@ -33,9 +33,7 @@ const AnimeListCards: React.FC<AnimeListCardsProps> = ({
     }
 
     const { commonMediaList, recommendedMediaList } = getCommonAnime(data);
-    setCommonMedia(
-      commonMediaList.filter(({ media }) => media.status !== "NOT_YET_RELEASED")
-    );
+    setCommonMedia(commonMediaList);
     setRecommendedMedia(recommendedMediaList);
   }, [data]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -46,6 +44,10 @@ const AnimeListCards: React.FC<AnimeListCardsProps> = ({
 
   return (
     <div>
+      <h3 className="text-center mt-5">Common planning</h3>
+      <p className="lead text-center text-white-50">
+        You all may have something in common.
+      </p>
       {commonMedia.map(({ media, users }) => (
         <AnimeListCard
           key={media.siteUrl}
@@ -55,6 +57,10 @@ const AnimeListCards: React.FC<AnimeListCardsProps> = ({
           usersText="Wanted by"
         />
       ))}
+      <h3 className="text-center mt-5">Recommended anime</h3>
+      <p className="lead text-center text-white-50">
+        You didn't know you want it.
+      </p>
       {recommendedMedia.map(({ media, users }) => (
         <AnimeListCard
           key={media.siteUrl}

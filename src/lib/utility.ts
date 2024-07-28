@@ -16,9 +16,17 @@ export const getCommonAnime = (
   const recommendedMediaCount = new Map<string, CommonMediaCollection>();
   const knownAnime = new Set<string>();
 
+  const regex = /(COMPLETED|REPEATING|PLANNING)$/;
+
   // generate watchedAnime set
   Object.entries(data).forEach(([username, mediaCollection]) => {
-    if (username.endsWith("ALL")) {
+    if (
+      username.endsWith("COMPLETED_ALL") ||
+      username.endsWith("REPEATING") ||
+      username.endsWith("PAUSED") ||
+      username.endsWith("DROPPED") ||
+      username.endsWith("CURRENT")
+    ) {
       mediaCollection.lists.forEach((list) => {
         list.entries.forEach((entry) => {
           knownAnime.add(entry.media.siteUrl);
@@ -26,13 +34,10 @@ export const getCommonAnime = (
       });
     }
   });
+
   // search for common entries and recommendations
   Object.entries(data).forEach(([username, mediaCollection]) => {
-    if (
-      !username.endsWith("ALL") &&
-      !username.endsWith("REPEATING") &&
-      !username.endsWith("COMPLETED")
-    ) {
+    if (username.endsWith("PLANNING")) {
       mediaCollection.lists
         .filter((list) => list.isCustomList === false)
         .forEach((list) => {
@@ -43,8 +48,8 @@ export const getCommonAnime = (
             commonMediaCount.set(media, {
               media: entry.media,
               users: commonMediaEntry
-                ? [...commonMediaEntry.users, username]
-                : [username],
+                ? [...commonMediaEntry.users, username.replace(regex, "")]
+                : [username.replace(regex, "")],
             });
           });
         });
@@ -59,8 +64,6 @@ export const getCommonAnime = (
             ) {
               const media = node.mediaRecommendation.siteUrl;
               const recommendedMediaEntry = recommendedMediaCount.get(media);
-
-              const regex = /(COMPLETED|REPEATING)$/;
 
               recommendedMediaCount.set(media, {
                 media: node.mediaRecommendation,
@@ -80,7 +83,8 @@ export const getCommonAnime = (
 
   // converting Map to array and filtering common entries
   const commonMediaCollection = Array.from(commonMediaCount.values()).filter(
-    (media) => media.users.length >= 2
+    (media) =>
+      media.users.length >= 2 && media.media.status !== "NOT_YET_RELEASED"
   );
   const recommendedMediaCollection = Array.from(recommendedMediaCount.values())
     .map((media) => {
@@ -88,7 +92,7 @@ export const getCommonAnime = (
       return { media: media.media, users: Array.from(users) };
     })
     .filter((media) => {
-      return media.users.length >= 2;
+      return media.users.length >= 2 && media.media.format !== "MUSIC";
     });
 
   // sorting by user count and score
@@ -104,8 +108,6 @@ export const getCommonAnime = (
       );
     })
     .slice(0, 10);
-
-  console.log(sortedRecommendedMediaCollection);
 
   return {
     commonMediaList: sortedCommonMediaCollection,
