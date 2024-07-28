@@ -59,7 +59,7 @@ const AnimeListCards: React.FC<AnimeListCardsProps> = ({
       ))}
       <h3 className="text-center mt-5">Recommended anime</h3>
       <p className="lead text-center text-white-50">
-        You didn't know you want it.
+        You didn&apos;t know you want it.
       </p>
       {recommendedMedia.map(({ media, users }) => (
         <AnimeListCard
