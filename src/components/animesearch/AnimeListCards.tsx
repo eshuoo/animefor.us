@@ -37,10 +37,37 @@ const AnimeListCards: React.FC<AnimeListCardsProps> = ({
     setRecommendedMedia(recommendedMediaList);
   }, [data]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  if (loading) return <AnimeSkeleton />;
-  if (error) return <div>Error</div>;
-  if (!commonMedia.length && data)
-    return <p className="text-danger text-center">No common anime found</p>;
+  const noCommonnime = (
+    <p className="text-danger text-center mt-5">{`No common anime found.\nTry adding some more!`}</p>
+  );
+  const noRecommendedAnime = (
+    <p className="text-danger text-center mt-5">
+      No recommendations for you ●︿●
+    </p>
+  );
+
+  if (loading)
+    return (
+      <div>
+        <h3 className="text-center mt-5">Common planning</h3>
+        <p className="lead text-center text-white-50">
+          You all may have something in common.
+        </p>
+        <AnimeSkeleton />
+        <h3 className="text-center mt-5">Recommended anime</h3>
+        <p className="lead text-center text-white-50">
+          You didn&apos;t know you want it.
+        </p>
+        <AnimeSkeleton />
+      </div>
+    );
+
+  if (error)
+    return (
+      <p className="text-danger text-center mt-5">{`Something went wrong (✖﹏✖)\nTry again later!`}</p>
+    );
+
+  !commonMedia.length && !recommendedMedia.length && data;
 
   return (
     <div>
@@ -48,6 +75,7 @@ const AnimeListCards: React.FC<AnimeListCardsProps> = ({
       <p className="lead text-center text-white-50">
         You all may have something in common.
       </p>
+      {!commonMedia.length && data && noCommonnime}
       {commonMedia.map(({ media, users }) => (
         <AnimeListCard
           key={media.siteUrl}
@@ -61,6 +89,7 @@ const AnimeListCards: React.FC<AnimeListCardsProps> = ({
       <p className="lead text-center text-white-50">
         You didn&apos;t know you want it.
       </p>
+      {!recommendedMedia.length && data && noRecommendedAnime}
       {recommendedMedia.map(({ media, users }) => (
         <AnimeListCard
           key={media.siteUrl}
@@ -68,6 +97,7 @@ const AnimeListCards: React.FC<AnimeListCardsProps> = ({
           users={users}
           titleFormat={titleFormat}
           usersText="Recommended for"
+          noAnimeMessage="No recommendations for you ●︿●"
         />
       ))}
     </div>

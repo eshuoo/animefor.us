@@ -110,7 +110,7 @@ const createDynamicAnilistAnimeQuery = (usernames: string[]) => {
         }
       }
     }
-    ${name}COMPLETED: MediaListCollection(userName: $${name}, type: ANIME, status: COMPLETED, sort: SCORE_DESC, perChunk: 20, chunk: 1) {
+    ${name}COMPLETED: MediaListCollection(userName: $${name}, type: ANIME, status: COMPLETED, sort: SCORE_DESC, perChunk: 25, chunk: 1) {
       lists {
         entries {
           media {
