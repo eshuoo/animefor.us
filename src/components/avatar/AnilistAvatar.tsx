@@ -5,51 +5,51 @@ import { useAnilistAvatar } from "@/hooks/useAnilist";
 import Image from "next/image";
 
 type AnilistAvatarProps = {
-  index: number;
-  username: string;
-  handleAvatarStateChange: (index: number, isLoadingError: boolean) => void;
+    index: number;
+    username: string;
+    handleAvatarStateChange: (index: number, isLoadingError: boolean) => void;
 };
 
 const override: CSSProperties = {
-  height: "100px",
-  width: "100px",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
+    height: "100px",
+    width: "100px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
 };
 
 const AnilistAvatar: React.FC<AnilistAvatarProps> = ({
-  index,
-  username,
-  handleAvatarStateChange,
+    index,
+    username,
+    handleAvatarStateChange,
 }) => {
-  const { loading, error, data } = useAnilistAvatar(username || "");
+    const { loading, error, data } = useAnilistAvatar(username || "");
 
-  useEffect(() => {
-    if (loading || error || data === undefined) {
-      handleAvatarStateChange(index, true);
-    } else {
-      handleAvatarStateChange(index, false);
+    useEffect(() => {
+        if (loading || error || data === undefined) {
+            handleAvatarStateChange(index, true);
+        } else {
+            handleAvatarStateChange(index, false);
+        }
+    }, [data, error, loading]); // eslint-disable-line react-hooks/exhaustive-deps
+
+    if (error) {
+        return <p className="text-danger">User not found</p>;
     }
-  }, [data, error, loading]); // eslint-disable-line react-hooks/exhaustive-deps
+    if (loading || data === undefined) {
+        return <SyncLoader color="#6F42C1" cssOverride={override} />;
+    }
 
-  if (error) {
-    return <p className="text-danger">User not found</p>;
-  }
-  if (loading || data === undefined) {
-    return <SyncLoader color="#6F42C1" cssOverride={override} />;
-  }
-
-  return (
-    <div className={style.avatarImage}>
-      <Image
-        fill
-        sizes="100px"
-        src={data.User.avatar.medium}
-        alt={`${username}'s avatar image.`}
-      />
-    </div>
-  );
+    return (
+        <div className={style.avatarImage}>
+            <Image
+                fill
+                sizes="100px"
+                src={data.User.avatar.medium}
+                alt={`${username}'s avatar image.`}
+            />
+        </div>
+    );
 };
 
 export default AnilistAvatar;

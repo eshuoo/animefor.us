@@ -8,15 +8,19 @@ import { UsersSkeleton } from "@/components/ui/skeletons";
 //todo: searchParams tylko jako mirror a nie state
 //todo: add pagination
 //todo: switch po boku strony z typami bajek
+//todo: promare pojawai się 2 razy
+//todo: userReducer
+//todo: wypierdolić powtarzjących się userów o tej samej nazwie
+//todo: mrugający english
 
 const App = () => {
-  return (
-    <div className={style.app_container}>
-      <Suspense fallback={<UsersSkeleton />}>
-        <AnilistUsersBox />
-      </Suspense>
-    </div>
-  );
+    return (
+        <div className={style.app_container}>
+            <Suspense fallback={<UsersSkeleton />}>
+                <AnilistUsersBox />
+            </Suspense>
+        </div>
+    );
 };
 
 export default App;
