@@ -1,9 +1,11 @@
-import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/react";
 import { Inter } from "next/font/google";
 import "@/styles/globals.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
 import ApolloClientWrapper from "@/lib/apolloClientWrapper";
 import Header from "@/components/ui/Header";
+
+import type { Metadata } from "next";
 
 const inter = Inter({ subsets: ["latin"] });
 
