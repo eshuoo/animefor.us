@@ -9,16 +9,15 @@ type AnimeListProps = {
 };
 
 const AnimeList: React.FC<AnimeListProps> = ({ usernames }) => {
-    const [titleFormat, setTitleFormat] = useState<TitleFormats>("english");
-
-    useEffect(() => {
+    const [titleFormat, setTitleFormat] = useState<TitleFormats>(() => {
         if (typeof window !== "undefined") {
-            const titleFormat = localStorage.getItem(
-                "titleFormat"
-            ) as TitleFormats;
-            titleFormat && setTitleFormat(titleFormat);
+            return (
+                (localStorage.getItem("titleFormat") as TitleFormats) ||
+                "english"
+            );
         }
-    }, []);
+        return "english";
+    });
 
     return (
         <div className="container-md">

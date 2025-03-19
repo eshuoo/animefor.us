@@ -52,6 +52,7 @@ const AnilistUsersBox = () => {
 
     // check if button should be disabled
     const isButtonDisabled = useMemo(() => {
+        console.log(isAvatarLoadingError);
         return (
             paramsUsers.length < 2 ||
             userCount !== paramsUsers.length ||
@@ -61,7 +62,7 @@ const AnilistUsersBox = () => {
             paramsUsers.filter(
                 (item, index) => paramsUsers.indexOf(item) !== index
             ).length > 0 ||
-            isAvatarLoadingError.includes(true)
+            isAvatarLoadingError.slice(0, userCount).includes(true)
         );
     }, [paramsUsers, userCount, submittedUsers, isAvatarLoadingError]);
 

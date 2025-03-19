@@ -24,12 +24,7 @@ const AnilistUser: React.FC<AnilistUserProps> = ({
     const ref = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
-        if (username) {
-            handleAvatarStateChange(index, true);
-        }
-        return () => {
-            handleAvatarStateChange(index, false);
-        };
+        handleAvatarStateChange(index, !!username);
     }, [username]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
