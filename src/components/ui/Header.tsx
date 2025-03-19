@@ -6,7 +6,16 @@ const Header: React.FC = () => {
         <header>
             <nav className="navbar bg-primary">
                 <div className="container-md container-md d-flex justify-content-between align-items-center">
-                    <a className="navbar-brand mb-0 h1 text-white" href="/">
+                    <a
+                        className="navbar-brand mb-0 h1 text-white align-items-center d-flex gap-2"
+                        href="/"
+                    >
+                        <Image
+                            src="/icons/animeforus.svg"
+                            alt="Link to buymeacoffee.com"
+                            width={36}
+                            height={36}
+                        />
                         AnimeFor.Us
                     </a>
                     <ul className="navbar-nav d-flex flex-row gap-4">

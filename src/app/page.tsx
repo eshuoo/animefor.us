@@ -12,6 +12,8 @@ import { UsersSkeleton } from "@/components/ui/skeletons";
 //todo: userReducer
 //todo: fix adding 4th user without 3th being added
 //todo: add GSC
+//todo: popover "made with love"
+//todo: responsive mobile layout
 
 const App = () => {
     return (
