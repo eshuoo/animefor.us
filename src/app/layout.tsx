@@ -1,8 +1,8 @@
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Inter } from "next/font/google";
-import "@/styles/globals.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "@/styles/globals.scss";
 import ApolloClientWrapper from "@/lib/apolloClientWrapper";
 import Header from "@/components/ui/Header";
 
