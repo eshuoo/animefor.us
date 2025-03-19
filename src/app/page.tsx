@@ -11,7 +11,6 @@ import { UsersSkeleton } from "@/components/ui/skeletons";
 //todo: promare pojawia się 2 razy
 //todo: userReducer
 //todo: fix adding 4th user without 3th being added
-//todo: add buymeacoffee.com
 //todo: add GSC
 //todo: add favicon
 //todo: add SEO and meta tags

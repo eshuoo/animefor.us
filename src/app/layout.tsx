@@ -8,21 +8,21 @@ import Header from "@/components/ui/Header";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Anime For Us",
-  description: "Website that suggests anime for both of you.",
+    title: "Anime For Us",
+    description: "Website that suggests anime for both of you.",
 };
 
 export default function RootLayout({
-  children,
+    children,
 }: Readonly<{
-  children: React.ReactNode;
+    children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en">
-      <body className={inter.className}>
-        <Header />
-        <ApolloClientWrapper>{children}</ApolloClientWrapper>
-      </body>
-    </html>
-  );
+    return (
+        <html lang="en">
+            <body className={inter.className}>
+                <Header />
+                <ApolloClientWrapper>{children}</ApolloClientWrapper>
+            </body>
+        </html>
+    );
 }
