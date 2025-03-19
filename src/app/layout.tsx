@@ -1,4 +1,5 @@
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Inter } from "next/font/google";
 import "@/styles/globals.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -69,6 +70,8 @@ export default function RootLayout({
             <body className={inter.className}>
                 <Header />
                 <ApolloClientWrapper>{children}</ApolloClientWrapper>
+                <Analytics />
+                <SpeedInsights />
             </body>
         </html>
     );
