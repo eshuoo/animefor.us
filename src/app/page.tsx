@@ -3,6 +3,7 @@ import style from "./page.module.scss";
 import AnilistUsersBox from "@/components/avatar/AnilistUsersBox";
 import { UsersSkeleton } from "@/components/ui/skeletons";
 
+//todo: add GSC and marketing
 //todo: add absolute positioning app_container bullshit shenanigans
 //todo: add UsernameSearch component
 //todo: searchParams tylko jako mirror a nie state
@@ -11,8 +12,6 @@ import { UsersSkeleton } from "@/components/ui/skeletons";
 //todo: promare pojawia się 2 razy
 //todo: userReducer
 //todo: fix adding 4th user without 3th being added
-//todo: add GSC
-//todo: popover "made with love"
 //todo: responsive mobile layout
 
 const App = () => {
