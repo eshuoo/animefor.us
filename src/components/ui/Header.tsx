@@ -1,13 +1,35 @@
-import React from "react";
+"use client";
+
+import React, { useEffect } from "react";
 import Image from "next/image";
 
 const Header: React.FC = () => {
+    useEffect(() => {
+        if (typeof window === "undefined") return;
+
+        import("bootstrap/dist/js/bootstrap.bundle.min.js").then(
+            (bootstrap) => {
+                const Tooltip = bootstrap.Tooltip;
+                const tooltipTriggerList = document.querySelectorAll(
+                    '[data-bs-toggle="tooltip"]'
+                );
+                const tooltipList = Array.from(tooltipTriggerList).map(
+                    (tooltipTriggerEl) => new Tooltip(tooltipTriggerEl)
+                );
+
+                return () => {
+                    tooltipList.forEach((tooltip) => tooltip.dispose());
+                };
+            }
+        );
+    }, []);
+
     return (
         <header>
             <nav className="navbar bg-primary">
                 <div className="container-md container-md d-flex justify-content-between align-items-center">
                     <a
-                        className="navbar-brand mb-0 h1 text-white align-items-center d-flex gap-2"
+                        className="navbar-brand mb-0 h1 text-white align-items-center d-flex gap-3"
                         href="/"
                     >
                         <Image
@@ -18,7 +40,13 @@ const Header: React.FC = () => {
                         />
                         AnimeFor.Us
                     </a>
-                    <ul className="navbar-nav d-flex flex-row gap-4">
+
+                    <ul
+                        className="navbar-nav d-flex flex-row gap-3"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="bottom"
+                        data-bs-title="Made with 💜 by Eshuo"
+                    >
                         <li className="navbar-item">
                             <a
                                 href="https://buymeacoffee.com/wodmat1g"
